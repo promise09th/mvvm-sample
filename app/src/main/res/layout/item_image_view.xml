@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="holder"
+            type="com.promise09th.mvvmproject.view.recyclerview.ThumbnailHolder" />
+        <variable
+            name="thumbnail"
+            type="com.promise09th.mvvmproject.model.Thumbnail" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_view_list_height"
+        android:layout_marginStart="@dimen/image_view_margin"
+        android:layout_marginEnd="@dimen/image_view_margin"
+        android:gravity="center_vertical"
+        android:onClick="@{() -> holder.onClickItem(thumbnail)}"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/thumbnail_img"
+            android:layout_width="@dimen/image_view_width"
+            android:layout_height="@dimen/image_view_height"
+            android:layout_marginEnd="@dimen/image_view_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:thumbnailUrl="@{thumbnail.getThumbnailUrl()}" />
+
+        <TextView
+            android:id="@+id/thumbnail_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/image_view_margin"
+            android:text="@{thumbnail.getDateTime()}"
+            android:textSize="@dimen/download_id_text_size"
+            app:layout_constraintBottom_toTopOf="@id/thumbnail_id"
+            app:layout_constraintStart_toEndOf="@id/thumbnail_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/thumbnail_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/id_max_width"
+            android:layout_marginStart="@dimen/image_view_margin"
+            android:layout_marginEnd="@dimen/image_view_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{thumbnail.getName()}"
+            android:textSize="@dimen/download_id_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/thumbnail_img"
+            app:layout_constraintTop_toBottomOf="@id/thumbnail_date" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:background="#808080"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

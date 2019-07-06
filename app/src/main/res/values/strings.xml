@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MVVM 예제 프로젝트</string>
+    <string name="tab_text_1">검색 결과</string>
+    <string name="tab_text_2">내 보관함</string>
+    <string name="search">검색</string>
+    <string name="search_view_hint">검색어를 입력해주세요</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_confirm">확인</string>
+    <string name="note">알림</string>
+    <string name="mylocker_thumbnail_add">이 이미지를 내 보관함에 추가하시겠습니까?</string>
+    <string name="mylocker_thumbnail_delete">이 이미지를 내 보관함에서 삭제하시겠습니까?</string>
+    <string name="mylocker_thumbnail_already_added">이미 보관중인 검색결과 입니다</string>
+    <string name="thumbnail_image">썸네일 이미지</string>
+</resources>
