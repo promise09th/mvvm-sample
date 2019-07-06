@@ -12,6 +12,7 @@ list를 선택하여 추가하면, 내 보관함에 추가되는 예제입니다
 # Library
 - ViewPager
 - Data Binding
+- ViewModel
 - RxJava
 - OkHttpClient
 - Gson
