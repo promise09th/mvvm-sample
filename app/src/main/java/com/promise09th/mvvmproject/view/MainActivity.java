@@ -1,7 +1,10 @@
-package com.promise09th.mvvmproject;
+package com.promise09th.mvvmproject.view;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -10,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.ActivityMainBinding;
 import com.promise09th.mvvmproject.view.viewpager.SectionsPagerAdapter;
@@ -57,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
             @Override
             public boolean onQueryTextSubmit(String input) {
-                mDisposables.add(mThumbnailViewModel.getThumbnail(input).subscribe(
-                        receivedThumbnail -> mThumbnailViewModel.setSearchResultThumbnail(receivedThumbnail)));
+                getThumbnail(input);
                 mBinding.viewPager.setCurrentItem(0);
                 clearFragmentRecyclerviewPosition();
                 return false;
@@ -70,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void getThumbnail(String input) {
+        mDisposables.add(mThumbnailViewModel.getThumbnail(input)
+                .subscribe(
+                        receivedThumbnail -> mThumbnailViewModel.setSearchResultThumbnail(receivedThumbnail),
+                        e -> new Handler(Looper.getMainLooper()).post(this::showErrorToast)));
+    }
+
+    private void showErrorToast() {
+        Toast.makeText(MainActivity.this, R.string.thumbnail_error, Toast.LENGTH_SHORT).show();
     }
 
     private void clearFragmentRecyclerviewPosition() {

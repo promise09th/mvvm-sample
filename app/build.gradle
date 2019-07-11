@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "KAKAO_REST_API_KEY", "\"7b84dee633040bcf55aba4c8797d9d35\"")
+        buildConfigField("String", "KAKAO_REST_API_KEY", "\"171eadd27c9871b1b334b53ed0f6faea\"")
     }
 
     buildTypes {

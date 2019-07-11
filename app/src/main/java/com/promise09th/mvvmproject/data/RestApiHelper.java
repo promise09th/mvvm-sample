@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.promise09th.mvvmproject.common.KakaoApiKey;
 import com.promise09th.mvvmproject.model.ImageThumbnail;
 import com.promise09th.mvvmproject.model.Thumbnail;
@@ -15,6 +17,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,20 +51,22 @@ public class RestApiHelper {
                 .url(requestUrl)
                 .build();
         return get(request)
-                .map(json -> {
-                    ArrayList<Thumbnail> list = new ArrayList<>();
-                    try {
-                        JSONObject obj = new JSONObject(json);
-                        JSONArray arr = obj.getJSONArray("documents");
-                        Gson gson = new Gson();
-                        for (int i = 0; i < arr.length(); i++) {
-                            list.add(gson.fromJson(arr.getString(i), VideoThumbnail.class));
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return list;
-                });
+                .map(json -> new ArrayList<>(parseVideoThumbnail(json)));
+    }
+
+    private static ArrayList<VideoThumbnail> parseVideoThumbnail(String json) {
+        try {
+            Gson gson = new Gson();
+            return Optional.ofNullable(new JsonParser().parse(json))
+                    .map(JsonElement::getAsJsonObject)
+                    .map(e -> e.getAsJsonArray("documents"))
+                    .map(JsonElement::toString)
+                    .map(documents -> gson.fromJson(documents, VideoThumbnail[].class))
+                    .map(a -> new ArrayList<>(Arrays.asList(a)))
+                    .orElse(new ArrayList<>());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     public static Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
@@ -72,20 +79,22 @@ public class RestApiHelper {
                 .url(requestUrl)
                 .build();
         return get(request)
-                .map(json -> {
-                    ArrayList<Thumbnail> list = new ArrayList<>();
-                    try {
-                        JSONObject obj = new JSONObject(json);
-                        JSONArray arr = obj.getJSONArray("documents");
-                        Gson gson = new Gson();
-                        for (int i = 0; i < arr.length(); i++) {
-                            list.add(gson.fromJson(arr.getString(i), ImageThumbnail.class));
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return list;
-                });
+                .map(json -> new ArrayList<>(parseImageThumbnail(json)));
+    }
+
+    private static ArrayList<ImageThumbnail> parseImageThumbnail(String json) {
+        try {
+            Gson gson = new Gson();
+            return Optional.ofNullable(new JsonParser().parse(json))
+                    .map(JsonElement::getAsJsonObject)
+                    .map(e -> e.getAsJsonArray("documents"))
+                    .map(JsonElement::toString)
+                    .map(documents -> gson.fromJson(documents, ImageThumbnail[].class))
+                    .map(a -> new ArrayList<>(Arrays.asList(a)))
+                    .orElse(new ArrayList<>());
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     private static Single<String> get(Request request) {
