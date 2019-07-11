@@ -11,4 +11,5 @@
     <string name="mylocker_thumbnail_delete">이 이미지를 내 보관함에서 삭제하시겠습니까?</string>
     <string name="mylocker_thumbnail_already_added">이미 보관중인 검색결과 입니다</string>
     <string name="thumbnail_image">썸네일 이미지</string>
+    <string name="thumbnail_error">썸네일을 가져오지 못했습니다</string>
 </resources>
