@@ -1,10 +1,11 @@
-package com.promise09th.mvvmproject.viewmodel;
+package com.promise09th.mvvmproject.presentation.main;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.promise09th.mvvmproject.data.ThumbnailRepository;
+import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRepository;
 import com.promise09th.mvvmproject.model.Thumbnail;
 
 import java.util.ArrayList;
@@ -13,17 +14,18 @@ import io.reactivex.Single;
 
 public class ThumbnailViewModel extends ViewModel {
 
+    public enum ClickType {
+        SEARCH_RESULT,
+        MY_LOCKER
+    }
+
+    private ThumbnailRepository mThumbnailRepository;
+
     private MutableLiveData<ArrayList<Thumbnail>> mSearchResultThumbnail = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Thumbnail>> mSavedThumbnail = new MutableLiveData<>();
 
-    public void setSearchResultThumbnail(Thumbnail receiveThumbnail) {
-        ArrayList<Thumbnail> list = getSearchResultThumbnail().getValue();
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-        list.add(receiveThumbnail);
-        list.sort((t1, t2) -> t2.getDateTime().compareToIgnoreCase(t1.getDateTime()));
-        mSearchResultThumbnail.setValue(list);
+    public ThumbnailViewModel(@NonNull ThumbnailRepository thumbnailRepository) {
+        mThumbnailRepository = thumbnailRepository;
     }
 
     public void setSearchResultThumbnail(ArrayList<Thumbnail> receiveThumbnail) {
@@ -53,11 +55,6 @@ public class ThumbnailViewModel extends ViewModel {
         mSavedThumbnail.setValue(list);
     }
 
-    public void setSavedThumbnail(ArrayList<Thumbnail> savedThumbnail) {
-        savedThumbnail.sort((t1, t2) -> t2.getDateTime().compareToIgnoreCase(t1.getDateTime()));
-        mSavedThumbnail.setValue(savedThumbnail);
-    }
-
     public void removeSavedThumbnail(Thumbnail savedThumbnail) {
         ArrayList<Thumbnail> list = getSavedThumbnail().getValue();
         if (list == null) {
@@ -76,6 +73,6 @@ public class ThumbnailViewModel extends ViewModel {
     }
 
     public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
-        return ThumbnailRepository.getThumbnail(query);
+        return mThumbnailRepository.getThumbnail(query);
     }
 }

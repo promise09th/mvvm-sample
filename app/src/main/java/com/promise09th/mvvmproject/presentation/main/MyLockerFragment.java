@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.view.main;
+package com.promise09th.mvvmproject.presentation.main;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -9,20 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.common.OnClickItemListener;
 import com.promise09th.mvvmproject.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.FragmentMyLockerBinding;
 import com.promise09th.mvvmproject.model.Thumbnail;
-import com.promise09th.mvvmproject.view.recyclerview.ThumbnailAdapter;
-import com.promise09th.mvvmproject.viewmodel.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.ViewModelFactory;
+import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyLockerFragment extends Fragment implements OnClickItemListener, PresetPosition {
+public class MyLockerFragment extends Fragment implements PresetPosition {
 
     private ThumbnailViewModel mThumbnailViewModel;
     private ThumbnailAdapter mAdapter;
@@ -37,25 +36,26 @@ public class MyLockerFragment extends Fragment implements OnClickItemListener, P
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mThumbnailViewModel = ViewModelProviders.of(getActivity()).get(ThumbnailViewModel.class);
-        mAdapter = new ThumbnailAdapter(this);
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        mThumbnailViewModel = new ViewModelProvider(getActivity(), factory).get(ThumbnailViewModel.class);
+
+        mAdapter = new ThumbnailAdapter(this::onItemClick);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
         mBinding.setViewModel(mThumbnailViewModel);
         mBinding.mylockerRecyclerview.setAdapter(mAdapter);
         mBinding.setLifecycleOwner(getActivity());
+
         return mBinding.getRoot();
     }
 
-    @Override
-    public void onClickItem(Thumbnail thumbnail) {
+    private void onItemClick(Thumbnail thumbnail) {
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.note)
                 .setMessage(R.string.mylocker_thumbnail_delete)
                 .setNegativeButton(R.string.btn_cancel, null)
-                .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) -> {
-                    mThumbnailViewModel.removeSavedThumbnail(thumbnail);
-                })
+                .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
+                        mThumbnailViewModel.removeSavedThumbnail(thumbnail))
                 .create();
         dialog.show();
     }

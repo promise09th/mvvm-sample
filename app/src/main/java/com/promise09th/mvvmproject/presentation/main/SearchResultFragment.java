@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.view.main;
+package com.promise09th.mvvmproject.presentation.main;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -9,20 +9,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.common.OnClickItemListener;
 import com.promise09th.mvvmproject.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.FragmentSearchResultBinding;
 import com.promise09th.mvvmproject.model.Thumbnail;
-import com.promise09th.mvvmproject.view.recyclerview.ThumbnailAdapter;
-import com.promise09th.mvvmproject.viewmodel.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.ViewModelFactory;
+import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SearchResultFragment extends Fragment implements OnClickItemListener, PresetPosition {
+public class SearchResultFragment extends Fragment implements PresetPosition {
 
     private ThumbnailViewModel mThumbnailViewModel;
     private ThumbnailAdapter mAdapter;
@@ -37,18 +36,20 @@ public class SearchResultFragment extends Fragment implements OnClickItemListene
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mThumbnailViewModel = ViewModelProviders.of(getActivity()).get(ThumbnailViewModel.class);
-        mAdapter = new ThumbnailAdapter(this);
+        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
+        mThumbnailViewModel = new ViewModelProvider(getActivity(), factory).get(ThumbnailViewModel.class);
+
+        mAdapter = new ThumbnailAdapter(this::onItemClick);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false);
         mBinding.setViewModel(mThumbnailViewModel);
         mBinding.searchResultRecyclerview.setAdapter(mAdapter);
         mBinding.setLifecycleOwner(getActivity());
+
         return mBinding.getRoot();
     }
 
-    @Override
-    public void onClickItem(Thumbnail thumbnail) {
+    private void onItemClick(Thumbnail thumbnail) {
         if (mThumbnailViewModel.containsSavedThumbnail(thumbnail)) {
             AlertDialog dialog = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.note)
