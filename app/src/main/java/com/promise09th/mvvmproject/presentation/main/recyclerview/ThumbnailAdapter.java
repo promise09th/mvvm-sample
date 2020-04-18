@@ -2,6 +2,7 @@ package com.promise09th.mvvmproject.presentation.main.recyclerview;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
@@ -10,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.promise09th.mvvmproject.common.OnThumbnailClickListener;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
 import com.promise09th.mvvmproject.model.Thumbnail;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
+
     private List<Thumbnail> mItems = new ArrayList<>();
     private OnThumbnailClickListener mItemClickListener;
 
@@ -59,5 +62,10 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
         if (adapter != null) {
             adapter.setItem(items);
         }
+    }
+
+    @BindingAdapter("thumbnailUrl")
+    public static void loadImage(ImageView imageView, String thumbnailUrl) {
+        Picasso.get().load(thumbnailUrl).into(imageView);
     }
 }
