@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.view;
+package com.promise09th.mvvmproject.presentation.main;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,15 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.ActivityMainBinding;
-import com.promise09th.mvvmproject.view.viewpager.SectionsPagerAdapter;
-import com.promise09th.mvvmproject.viewmodel.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.ViewModelFactory;
+import com.promise09th.mvvmproject.presentation.main.viewpager.SectionsPagerAdapter;
 
 import java.util.List;
 
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ThumbnailViewModel mThumbnailViewModel;
     private ActivityMainBinding mBinding;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
     private CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Override
@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mThumbnailViewModel = ViewModelProviders.of(this).get(ThumbnailViewModel.class);
+        ViewModelFactory factory = ViewModelFactory.getInstance(this.getApplication());
+        mThumbnailViewModel = new ViewModelProvider(this, factory).get(ThumbnailViewModel.class);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.setLifecycleOwner(this);
@@ -80,11 +81,12 @@ public class MainActivity extends AppCompatActivity {
         mDisposables.add(mThumbnailViewModel.getThumbnail(input)
                 .subscribe(
                         receivedThumbnail -> mThumbnailViewModel.setSearchResultThumbnail(receivedThumbnail),
-                        e -> new Handler(Looper.getMainLooper()).post(this::showErrorToast)));
+                        e -> showErrorToast()));
     }
 
     private void showErrorToast() {
-        Toast.makeText(MainActivity.this, R.string.thumbnail_error, Toast.LENGTH_SHORT).show();
+        mHandler.post(() ->
+                Toast.makeText(MainActivity.this, R.string.thumbnail_error, Toast.LENGTH_SHORT).show());
     }
 
     private void clearFragmentRecyclerviewPosition() {

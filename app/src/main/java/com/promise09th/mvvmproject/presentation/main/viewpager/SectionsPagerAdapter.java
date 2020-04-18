@@ -1,7 +1,8 @@
-package com.promise09th.mvvmproject.view.viewpager;
+package com.promise09th.mvvmproject.presentation.main.viewpager;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
@@ -9,8 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.view.main.MyLockerFragment;
-import com.promise09th.mvvmproject.view.main.SearchResultFragment;
+import com.promise09th.mvvmproject.presentation.main.MyLockerFragment;
+import com.promise09th.mvvmproject.presentation.main.SearchResultFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -18,7 +19,7 @@ import com.promise09th.mvvmproject.view.main.SearchResultFragment;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static int MAX_PAGE = 2;
+    private static final int MAX_PAGE = 2;
 
     @StringRes
     private static final int[] TAB_TITLES = new int[] {
@@ -32,6 +33,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {

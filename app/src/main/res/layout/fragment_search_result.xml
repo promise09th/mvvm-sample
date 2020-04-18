@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.promise09th.mvvmproject.viewmodel.ThumbnailViewModel" />
+            type="com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
