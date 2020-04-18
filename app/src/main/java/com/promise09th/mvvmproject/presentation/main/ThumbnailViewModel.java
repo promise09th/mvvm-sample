@@ -14,11 +14,6 @@ import io.reactivex.Single;
 
 public class ThumbnailViewModel extends ViewModel {
 
-    public enum ClickType {
-        SEARCH_RESULT,
-        MY_LOCKER
-    }
-
     private ThumbnailRepository mThumbnailRepository;
 
     private MutableLiveData<ArrayList<Thumbnail>> mSearchResultThumbnail = new MutableLiveData<>();
