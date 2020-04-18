@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRepository;
 import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.presentation.Event;
 
 import java.util.ArrayList;
 
@@ -14,10 +15,18 @@ import io.reactivex.Single;
 
 public class ThumbnailViewModel extends ViewModel {
 
+    public enum ClickView {
+        SEARCH,
+        LOCKER
+    }
+
     private ThumbnailRepository mThumbnailRepository;
 
     private MutableLiveData<ArrayList<Thumbnail>> mSearchResultThumbnail = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Thumbnail>> mSavedThumbnail = new MutableLiveData<>();
+
+    private MutableLiveData<Event<Thumbnail>> mSearchResultItemClicked = new MutableLiveData<>();
+    private MutableLiveData<Event<Thumbnail>> mMyLockerItemClicked = new MutableLiveData<>();
 
     public ThumbnailViewModel(@NonNull ThumbnailRepository thumbnailRepository) {
         mThumbnailRepository = thumbnailRepository;
@@ -70,4 +79,29 @@ public class ThumbnailViewModel extends ViewModel {
     public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
         return mThumbnailRepository.getThumbnail(query);
     }
+
+    public MutableLiveData<Event<Thumbnail>> getSearchResultItemClicked() {
+        return mSearchResultItemClicked;
+    }
+
+    public MutableLiveData<Event<Thumbnail>> getMyLockerItemClicked() {
+        return mMyLockerItemClicked;
+    }
+
+    public void onClickItem(ClickView type, Thumbnail thumbnail) {
+        if (type == ClickView.SEARCH) {
+            setSearchResultItemClicked(thumbnail);
+        } else { // ClickView.LOCKER
+            setMyLockerItemClicked(thumbnail);
+        }
+    }
+
+    private void setSearchResultItemClicked(Thumbnail thumbnail) {
+        mSearchResultItemClicked.setValue(new Event<>(thumbnail));
+    }
+
+    private void setMyLockerItemClicked(Thumbnail thumbnail) {
+        mMyLockerItemClicked.setValue(new Event<>(thumbnail));
+    }
+
 }

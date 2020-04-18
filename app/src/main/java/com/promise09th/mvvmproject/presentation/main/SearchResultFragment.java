@@ -39,35 +39,44 @@ public class SearchResultFragment extends Fragment implements PresetPosition {
         ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
         mThumbnailViewModel = new ViewModelProvider(getActivity(), factory).get(ThumbnailViewModel.class);
 
-        mAdapter = new ThumbnailAdapter(this::onItemClick);
+        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ThumbnailViewModel.ClickView.SEARCH);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false);
         mBinding.setViewModel(mThumbnailViewModel);
         mBinding.searchResultRecyclerview.setAdapter(mAdapter);
         mBinding.setLifecycleOwner(getActivity());
 
+        bindClicked();
+
         return mBinding.getRoot();
     }
 
-    private void onItemClick(Thumbnail thumbnail) {
-        if (mThumbnailViewModel.containsSavedThumbnail(thumbnail)) {
+    private void bindClicked() {
+        mThumbnailViewModel.getSearchResultItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
+            Thumbnail thumbnail = thumbnailEvent.getContentIfNotHandled();
+            if (thumbnail == null) {
+                return;
+            }
+
+            if (mThumbnailViewModel.containsSavedThumbnail(thumbnail)) {
+                AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.note)
+                        .setMessage(R.string.mylocker_thumbnail_already_added)
+                        .setPositiveButton(R.string.btn_confirm, null)
+                        .create();
+                dialog.show();
+                return;
+            }
+
             AlertDialog dialog = new AlertDialog.Builder(getActivity())
                     .setTitle(R.string.note)
-                    .setMessage(R.string.mylocker_thumbnail_already_added)
-                    .setPositiveButton(R.string.btn_confirm, null)
+                    .setMessage(R.string.mylocker_thumbnail_add)
+                    .setNegativeButton(R.string.btn_cancel, null)
+                    .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
+                            mThumbnailViewModel.setSavedThumbnail(thumbnail))
                     .create();
             dialog.show();
-            return;
-        }
-
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.note)
-                .setMessage(R.string.mylocker_thumbnail_add)
-                .setNegativeButton(R.string.btn_cancel, null)
-                .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
-                        mThumbnailViewModel.setSavedThumbnail(thumbnail))
-                .create();
-        dialog.show();
+        });
     }
 
     @Override
