@@ -39,25 +39,34 @@ public class MyLockerFragment extends Fragment implements PresetPosition {
         ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
         mThumbnailViewModel = new ViewModelProvider(getActivity(), factory).get(ThumbnailViewModel.class);
 
-        mAdapter = new ThumbnailAdapter(this::onItemClick);
+        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ThumbnailViewModel.ClickView.LOCKER);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
         mBinding.setViewModel(mThumbnailViewModel);
         mBinding.mylockerRecyclerview.setAdapter(mAdapter);
         mBinding.setLifecycleOwner(getActivity());
 
+        bindClicked();
+
         return mBinding.getRoot();
     }
 
-    private void onItemClick(Thumbnail thumbnail) {
-        AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.note)
-                .setMessage(R.string.mylocker_thumbnail_delete)
-                .setNegativeButton(R.string.btn_cancel, null)
-                .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
-                        mThumbnailViewModel.removeSavedThumbnail(thumbnail))
-                .create();
-        dialog.show();
+    private void bindClicked() {
+        mThumbnailViewModel.getMyLockerItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
+            Thumbnail thumbnail = thumbnailEvent.getContentIfNotHandled();
+            if (thumbnail == null) {
+                return;
+            }
+
+            AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.note)
+                    .setMessage(R.string.mylocker_thumbnail_delete)
+                    .setNegativeButton(R.string.btn_cancel, null)
+                    .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
+                            mThumbnailViewModel.removeSavedThumbnail(thumbnail))
+                    .create();
+            dialog.show();
+        });
     }
 
     @Override

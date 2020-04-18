@@ -8,9 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.promise09th.mvvmproject.common.OnThumbnailClickListener;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
 import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,10 +19,13 @@ import java.util.List;
 public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
 
     private List<Thumbnail> mItems = new ArrayList<>();
-    private OnThumbnailClickListener mItemClickListener;
 
-    public ThumbnailAdapter(OnThumbnailClickListener itemClickListener) {
-        mItemClickListener = itemClickListener;
+    private ThumbnailViewModel mThumbnailViewModel;
+    private ThumbnailViewModel.ClickView mType;
+
+    public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ThumbnailViewModel.ClickView type) {
+        mThumbnailViewModel = thumbnailViewModel;
+        mType = type;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
     public ThumbnailHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemImageViewBinding binding = ItemImageViewBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-        return new ThumbnailHolder(binding, mItemClickListener);
+        return new ThumbnailHolder(binding, mThumbnailViewModel, mType);
     }
 
     @Override

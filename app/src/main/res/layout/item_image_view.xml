@@ -4,8 +4,11 @@
 
     <data>
         <variable
-            name="clickListener"
-            type="com.promise09th.mvvmproject.common.OnThumbnailClickListener"/>
+            name="viewModel"
+            type="com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel" />
+        <variable
+            name="type"
+            type="com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel.ClickView" />
         <variable
             name="thumbnail"
             type="com.promise09th.mvvmproject.model.Thumbnail" />
@@ -17,7 +20,7 @@
         android:layout_marginStart="@dimen/image_view_margin"
         android:layout_marginEnd="@dimen/image_view_margin"
         android:gravity="center_vertical"
-        android:onClick="@{() -> clickListener.onClickItem(thumbnail)}"
+        android:onClick="@{() -> viewModel.onClickItem(type, thumbnail)}"
         android:orientation="vertical">
 
         <ImageView

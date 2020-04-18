@@ -2,22 +2,26 @@ package com.promise09th.mvvmproject.presentation.main.recyclerview;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.promise09th.mvvmproject.common.OnThumbnailClickListener;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
 import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 
 public class ThumbnailHolder extends RecyclerView.ViewHolder {
     private ItemImageViewBinding mBinding;
-    private OnThumbnailClickListener mItemClickListener;
+    private ThumbnailViewModel mThumbnailViewModel;
+    private ThumbnailViewModel.ClickView mType;
 
-    ThumbnailHolder(ItemImageViewBinding binding, OnThumbnailClickListener itemClickListener) {
+    ThumbnailHolder(ItemImageViewBinding binding, ThumbnailViewModel thumbnailViewModel, ThumbnailViewModel.ClickView type) {
         super(binding.getRoot());
         mBinding = binding;
-        mItemClickListener = itemClickListener;
+
+        mThumbnailViewModel = thumbnailViewModel;
+        mType = type;
     }
 
     public void bind(Thumbnail thumbnail) {
-        mBinding.setClickListener(mItemClickListener);
+        mBinding.setViewModel(mThumbnailViewModel);
+        mBinding.setType(mType);
         mBinding.setThumbnail(thumbnail);
     }
 }
