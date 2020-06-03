@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.FragmentSearchResultBinding;
-import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
 import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
 

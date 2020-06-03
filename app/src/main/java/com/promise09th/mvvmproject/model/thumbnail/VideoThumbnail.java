@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.model;
+package com.promise09th.mvvmproject.model.thumbnail;
 
 import android.text.TextUtils;
 
@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Optional;
 
-public class VideoThumbnail extends Thumbnail {
+public class VideoThumbnail implements Thumbnail {
+
     @SerializedName("title")
     private String mTitle;
 
@@ -33,8 +34,7 @@ public class VideoThumbnail extends Thumbnail {
     public String getName() {
         return Optional.ofNullable(mTitle)
                 .filter(t -> !TextUtils.isEmpty(t))
-                .map(t -> "Video : " + mTitle)
-                .orElse("Video");
+                .orElse("N/A");
     }
 
     @Override
@@ -47,19 +47,8 @@ public class VideoThumbnail extends Thumbnail {
         return mThumbnailUrl;
     }
 
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public String getDocUrl() {
-        return mDocUrl;
-    }
-
-    public String getPlayTime() {
-        return mPlayTime;
-    }
-
-    public String getAuthor() {
-        return mAuthor;
+    @Override
+    public String getType() {
+        return "비디오";
     }
 }

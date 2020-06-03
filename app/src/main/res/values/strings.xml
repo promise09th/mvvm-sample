@@ -12,4 +12,6 @@
     <string name="mylocker_thumbnail_already_added">이미 보관중인 검색결과 입니다</string>
     <string name="thumbnail_image">썸네일 이미지</string>
     <string name="thumbnail_error">썸네일을 가져오지 못했습니다</string>
+    <string name="image">이미지</string>
+    <string name="video">비디오</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.data;
+package com.promise09th.mvvmproject.data.common;
 
 import android.util.Log;
 
@@ -8,17 +8,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.promise09th.mvvmproject.common.KakaoApiKey;
-import com.promise09th.mvvmproject.model.ImageThumbnail;
-import com.promise09th.mvvmproject.model.Thumbnail;
-import com.promise09th.mvvmproject.model.VideoThumbnail;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.promise09th.mvvmproject.model.thumbnail.ImageThumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.VideoThumbnail;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import io.reactivex.Single;
@@ -33,6 +29,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+@Deprecated
 public class RestApiHelper {
     private static String TAG = RestApiHelper.class.getSimpleName();
 

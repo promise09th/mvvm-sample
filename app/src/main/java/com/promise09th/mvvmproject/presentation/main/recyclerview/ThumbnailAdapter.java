@@ -3,13 +3,16 @@ package com.promise09th.mvvmproject.presentation.main.recyclerview;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
-import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.VideoThumbnail;
 import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -70,5 +73,14 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
     @BindingAdapter("thumbnailUrl")
     public static void loadImage(ImageView imageView, String thumbnailUrl) {
         Picasso.get().load(thumbnailUrl).into(imageView);
+    }
+
+    @BindingAdapter("bind_type_color")
+    public static void bindTypeColor(TextView textView, Thumbnail thumbnail) {
+        if (thumbnail instanceof VideoThumbnail) {
+            textView.setTextColor(textView.getContext().getColor(R.color.color_39b4ee));
+        } else {
+            textView.setTextColor(textView.getContext().getColor(R.color.color_f4754e));
+        }
     }
 }
