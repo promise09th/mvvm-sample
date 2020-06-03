@@ -1,6 +1,6 @@
 package com.promise09th.mvvmproject.data.thumbnail;
 
-import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 
 import java.util.ArrayList;
 

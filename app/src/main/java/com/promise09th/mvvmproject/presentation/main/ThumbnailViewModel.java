@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRepository;
-import com.promise09th.mvvmproject.model.Thumbnail;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.presentation.Event;
 
 import java.util.ArrayList;
