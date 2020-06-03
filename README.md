@@ -14,6 +14,6 @@ Android MVVM 패턴을 이용하여 구현된 Sample code 입니다.
 - Data Binding
 - ViewModel
 - RxJava
-- OkHttpClient
+- Retrofit2
 - Gson
 - Picasso
