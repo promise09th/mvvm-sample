@@ -1,7 +1,5 @@
 package com.promise09th.mvvmproject.presentation;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,26 +7,16 @@ import androidx.lifecycle.ViewModelProvider;
 import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRepository;
 import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 
-public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
-    private static volatile ViewModelFactory INSTANCE;
+@Singleton
+public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private final ThumbnailRepository mThumbnailRepository;
 
-    public static ViewModelFactory getInstance(Application application) {
-        if (INSTANCE == null) {
-            synchronized (ViewModelFactory.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(
-                            Injection.provideThumbnailRepository(application.getApplicationContext())
-                    );
-                }
-            }
-        }
-        return INSTANCE;
-    }
-
-    private ViewModelFactory(ThumbnailRepository thumbnailRepository) {
+    @Inject
+    public ViewModelFactory(ThumbnailRepository thumbnailRepository) {
         mThumbnailRepository = thumbnailRepository;
     }
 

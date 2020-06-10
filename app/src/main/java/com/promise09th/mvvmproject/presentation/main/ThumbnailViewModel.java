@@ -11,6 +11,8 @@ import com.promise09th.mvvmproject.presentation.Event;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 
 public class ThumbnailViewModel extends ViewModel {
@@ -28,6 +30,7 @@ public class ThumbnailViewModel extends ViewModel {
     private MutableLiveData<Event<Thumbnail>> mSearchResultItemClicked = new MutableLiveData<>();
     private MutableLiveData<Event<Thumbnail>> mMyLockerItemClicked = new MutableLiveData<>();
 
+    @Inject
     public ThumbnailViewModel(@NonNull ThumbnailRepository thumbnailRepository) {
         mThumbnailRepository = thumbnailRepository;
     }

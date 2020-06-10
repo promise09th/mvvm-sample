@@ -4,20 +4,14 @@ import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 
 import java.util.ArrayList;
 
+import javax.inject.Singleton;
+
 import io.reactivex.Single;
 
+@Singleton
 public class ThumbnailLocalDataSource implements ThumbnailDataSource {
 
-    private static ThumbnailLocalDataSource sInstance;
-
-    public static synchronized ThumbnailLocalDataSource getInstance() {
-        if (sInstance == null) {
-            sInstance = new ThumbnailLocalDataSource();
-        }
-        return sInstance;
-    }
-
-    private ThumbnailLocalDataSource() {
+    public ThumbnailLocalDataSource() {
         // Not Assigned any object
     }
 

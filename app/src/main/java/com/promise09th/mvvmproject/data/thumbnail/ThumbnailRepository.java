@@ -6,24 +6,19 @@ import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Single;
 
+@Singleton
 public class ThumbnailRepository {
-
-    private static ThumbnailRepository sInstance;
 
     private ThumbnailDataSource mLocalDataSource;
     private ThumbnailDataSource mRemoteDataSource;
 
-    public static synchronized ThumbnailRepository getInstance(@NonNull ThumbnailDataSource local,
-                                                          @NonNull ThumbnailDataSource remote) {
-        if (sInstance == null) {
-            sInstance = new ThumbnailRepository(local, remote);
-        }
-        return sInstance;
-    }
-
-    private ThumbnailRepository(@NonNull ThumbnailDataSource local,
+    @Inject
+    public ThumbnailRepository(@NonNull ThumbnailDataSource local,
                                 @NonNull ThumbnailDataSource remote) {
         mLocalDataSource = local;
         mRemoteDataSource = remote;

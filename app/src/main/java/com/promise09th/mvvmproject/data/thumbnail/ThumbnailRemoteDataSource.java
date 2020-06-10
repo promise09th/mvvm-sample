@@ -3,33 +3,28 @@ package com.promise09th.mvvmproject.data.thumbnail;
 import androidx.annotation.NonNull;
 
 import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
-import com.promise09th.mvvmproject.data.retrofit.RetrofitClient;
 import com.promise09th.mvvmproject.model.response.ImageThumbnailResponse;
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.model.response.VideoThumbnailResponse;
+import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+@Singleton
 public class ThumbnailRemoteDataSource implements ThumbnailDataSource {
-
-    private static ThumbnailRemoteDataSource sInstance;
 
     private KakaoRetrofitService mKakaoService;
 
-    public static synchronized ThumbnailRemoteDataSource getInstance() {
-        if (sInstance == null) {
-            sInstance = new ThumbnailRemoteDataSource();
-        }
-        return sInstance;
-    }
-
-    private ThumbnailRemoteDataSource() {
-        mKakaoService = RetrofitClient.getKakaoClient().create(KakaoRetrofitService.class);
+    @Inject
+    public ThumbnailRemoteDataSource(KakaoRetrofitService kakaoService) {
+        mKakaoService = kakaoService;
     }
 
     @Override

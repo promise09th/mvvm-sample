@@ -1,6 +1,7 @@
 package com.promise09th.mvvmproject.presentation.main;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,17 @@ import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
 import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
 
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class SearchResultFragment extends Fragment implements PresetPosition {
+
+    @Inject
+    ViewModelFactory mViewModelFactory;
 
     private ThumbnailViewModel mThumbnailViewModel;
     private ThumbnailAdapter mAdapter;
@@ -35,9 +43,14 @@ public class SearchResultFragment extends Fragment implements PresetPosition {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        AndroidSupportInjection.inject(this);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewModelFactory factory = ViewModelFactory.getInstance(getActivity().getApplication());
-        mThumbnailViewModel = new ViewModelProvider(getActivity(), factory).get(ThumbnailViewModel.class);
+        mThumbnailViewModel = new ViewModelProvider(getActivity(), mViewModelFactory).get(ThumbnailViewModel.class);
 
         mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ThumbnailViewModel.ClickView.SEARCH);
 
