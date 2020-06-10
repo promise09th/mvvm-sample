@@ -15,6 +15,7 @@ import javax.inject.Singleton;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 
 // Reference : https://android.jlelse.eu/7-steps-to-implement-dagger-2-in-android-dabc16715a3a
@@ -30,14 +31,12 @@ import dagger.android.support.AndroidSupportInjectionModule;
         RetrofitModule.class,
         ViewModelModule.class
 })
-public interface AppComponent {
+public interface AppComponent extends AndroidInjector<MvvmApplication> {
 
     @Component.Builder
     interface Builder {
-
         @BindsInstance
         Builder application(Application application);
-
         AppComponent build();
     }
 
