@@ -10,10 +10,11 @@ Android MVVM 패턴을 이용하여 구현된 Sample code 입니다.
 - Java
 
 ## Library
-- ViewPager
 - Data Binding
-- ViewModel
-- RxJava
+- Dagger2
+- ViewModel (AAC)
+- ViewPager
+- RxJava2 (RxAndroid)
 - Retrofit2
 - Gson
 - Picasso

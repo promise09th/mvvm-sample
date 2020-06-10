@@ -21,9 +21,21 @@ import com.promise09th.mvvmproject.presentation.main.viewpager.SectionsPagerAdap
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import io.reactivex.disposables.CompositeDisposable;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
+    @Inject
+    ViewModelFactory mViewModelFactory;
 
     private ThumbnailViewModel mThumbnailViewModel;
     private ActivityMainBinding mBinding;
@@ -31,12 +43,18 @@ public class MainActivity extends AppCompatActivity {
     private CompositeDisposable mDisposables = new CompositeDisposable();
 
     @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewModelFactory factory = ViewModelFactory.getInstance(this.getApplication());
-        mThumbnailViewModel = new ViewModelProvider(this, factory).get(ThumbnailViewModel.class);
+        mThumbnailViewModel = new ViewModelProvider(this, mViewModelFactory).get(ThumbnailViewModel.class);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mBinding.setLifecycleOwner(this);
