@@ -1,7 +1,6 @@
 package com.promise09th.mvvmproject.presentation.main;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.R;
@@ -21,12 +19,12 @@ import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapt
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.DaggerFragment;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MyLockerFragment extends Fragment implements PresetPosition {
+public class MyLockerFragment extends DaggerFragment implements PresetPosition {
 
     @Inject
     ViewModelFactory mViewModelFactory;
@@ -40,12 +38,6 @@ public class MyLockerFragment extends Fragment implements PresetPosition {
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        AndroidSupportInjection.inject(this);
     }
 
     @Override

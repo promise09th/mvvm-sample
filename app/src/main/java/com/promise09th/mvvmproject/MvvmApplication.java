@@ -1,7 +1,5 @@
 package com.promise09th.mvvmproject;
 
-import android.app.Activity;
-import android.app.Application;
 import android.util.Log;
 
 import com.promise09th.mvvmproject.presentation.di.component.DaggerAppComponent;
@@ -9,33 +7,21 @@ import com.promise09th.mvvmproject.presentation.di.component.DaggerAppComponent;
 import java.io.IOException;
 import java.net.SocketException;
 
-import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
+import dagger.android.DaggerApplication;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 
-public class MvvmApplication extends Application implements HasActivityInjector {
-
-    @Inject
-    DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
-
-    @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingActivityInjector;
-    }
+public class MvvmApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        DaggerAppComponent.builder()
-                .application(this)
-                .build()
-                .inject(this);
+        setRxErrorHandler();
+    }
 
+    private void setRxErrorHandler() {
         RxJavaPlugins.setErrorHandler(e -> {
             if (e instanceof UndeliverableException) {
                 e = e.getCause();
@@ -66,5 +52,10 @@ public class MvvmApplication extends Application implements HasActivityInjector 
             }
             Log.e("RxJava_HOOK", "Undeliverable exception received, not sure what to do" + e.getMessage());
         });
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
     }
 }
