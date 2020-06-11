@@ -1,13 +1,8 @@
-package com.promise09th.mvvmproject.model.thumbnail;
-
-import android.text.TextUtils;
+package com.promise09th.mvvmproject.model.response.image;
 
 import com.google.gson.annotations.SerializedName;
-import com.promise09th.mvvmproject.R;
 
-import java.util.Optional;
-
-public class ImageThumbnail implements Thumbnail {
+public class ImageDocument {
     @SerializedName("collection")
     private String mCollection;
 
@@ -32,30 +27,39 @@ public class ImageThumbnail implements Thumbnail {
     @SerializedName("datetime")
     private String mDateTime;
 
-    public ImageThumbnail() {
+    public ImageDocument() {
 
     }
 
-    @Override
-    public String getName() {
-        return Optional.ofNullable(mDisplaySiteName)
-                .filter(t -> !TextUtils.isEmpty(t))
-                .orElse("N/A");
+    public String getCollection() {
+        return mCollection;
     }
 
-    @Override
-    public String getDateTime() {
-        return mDateTime;
-    }
-
-    @Override
     public String getThumbnailUrl() {
         return mThumbnailUrl;
     }
 
-    @Override
-    public String getType() {
-        return "이미지";
+    public String getImageUrl() {
+        return mImageUrl;
     }
 
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public String getDisplaySiteName() {
+        return mDisplaySiteName;
+    }
+
+    public String getDocUrl() {
+        return mDocUrl;
+    }
+
+    public String getDateTime() {
+        return mDateTime;
+    }
 }
