@@ -10,9 +10,9 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.promise09th.mvvmproject.R;
+import com.promise09th.mvvmproject.common.Constants;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
 import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
-import com.promise09th.mvvmproject.model.thumbnail.VideoThumbnail;
 import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -75,12 +75,19 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
         Picasso.get().load(thumbnailUrl).into(imageView);
     }
 
-    @BindingAdapter("bind_type_color")
-    public static void bindTypeColor(TextView textView, Thumbnail thumbnail) {
-        if (thumbnail instanceof VideoThumbnail) {
-            textView.setTextColor(textView.getContext().getColor(R.color.color_39b4ee));
-        } else {
-            textView.setTextColor(textView.getContext().getColor(R.color.color_f4754e));
+    @BindingAdapter("bind_type")
+    public static void bindType(TextView textView, Thumbnail thumbnail) {
+        switch (thumbnail.getType()) {
+            case Constants.VIDEO_TYPE:
+                textView.setText(R.string.video);
+                textView.setTextColor(textView.getContext().getColor(R.color.color_39b4ee));
+                break;
+            case Constants.IMAGE_TYPE:
+                textView.setText(R.string.image);
+                textView.setTextColor(textView.getContext().getColor(R.color.color_f4754e));
+                break;
+            default:
+                break;
         }
     }
 }

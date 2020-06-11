@@ -65,9 +65,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/item_text_margin_horizontal"
-            android:text="@{thumbnail.getType()}"
             android:textSize="@dimen/download_id_text_size"
-            app:bind_type_color="@{thumbnail}"
+            app:bind_type="@{thumbnail}"
             app:layout_constraintTop_toBottomOf="@id/thumbnail_id"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
