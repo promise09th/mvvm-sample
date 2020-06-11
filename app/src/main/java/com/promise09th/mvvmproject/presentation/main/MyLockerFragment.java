@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.common.PresetPosition;
+import com.promise09th.mvvmproject.common.ViewType;
 import com.promise09th.mvvmproject.databinding.FragmentMyLockerBinding;
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
 import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
+import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import javax.inject.Inject;
 
@@ -44,7 +45,7 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mThumbnailViewModel = new ViewModelProvider(getActivity(), mViewModelFactory).get(ThumbnailViewModel.class);
 
-        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ThumbnailViewModel.ClickView.LOCKER);
+        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ViewType.LOCKER);
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
         mBinding.setViewModel(mThumbnailViewModel);
@@ -52,6 +53,8 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
         mBinding.setLifecycleOwner(getActivity());
 
         bindClicked();
+
+        mThumbnailViewModel.fetchMyLockerThumbnails();
 
         return mBinding.getRoot();
     }

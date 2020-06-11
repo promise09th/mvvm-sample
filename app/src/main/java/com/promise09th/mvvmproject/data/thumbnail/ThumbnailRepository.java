@@ -2,40 +2,43 @@ package com.promise09th.mvvmproject.data.thumbnail;
 
 import androidx.annotation.NonNull;
 
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
+import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Singleton
 public class ThumbnailRepository {
 
-    private ThumbnailDataSource mLocalDataSource;
-    private ThumbnailDataSource mRemoteDataSource;
+    private ThumbnailLocalDataSource mLocalDataSource;
+    private ThumbnailRemoteDataSource mRemoteDataSource;
 
     @Inject
-    public ThumbnailRepository(@NonNull ThumbnailDataSource local,
-                                @NonNull ThumbnailDataSource remote) {
+    public ThumbnailRepository(@NonNull ThumbnailLocalDataSource local,
+                                @NonNull ThumbnailRemoteDataSource remote) {
         mLocalDataSource = local;
         mRemoteDataSource = remote;
     }
 
     public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
-        return Single.zip(getVideoThumbnail(query), getImageThumbnail(query), (image, video) -> {
-            image.addAll(video);
-            return image;
-        });
+        return mRemoteDataSource.getAllThumbnail(query);
     }
 
-    private Single<ArrayList<Thumbnail>> getVideoThumbnail(String query) {
-        return mRemoteDataSource.getVideoThumbnail(query);
+    public Flowable<ArrayList<Thumbnail>> getAllThumbnail() {
+        return mLocalDataSource.getAllThumbnail();
     }
 
-    private Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
-        return mRemoteDataSource.getImageThumbnail(query);
+    public Completable saveThumbnail(Thumbnail thumbnail) {
+        return mLocalDataSource.insertThumbnail(thumbnail);
+    }
+
+    public Completable deleteThumbnail(Thumbnail thumbnail) {
+        return mLocalDataSource.deleteThumbnail(thumbnail);
     }
 }

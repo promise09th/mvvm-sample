@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.presentation.di.module;
+package com.promise09th.mvvmproject.presentation.injection.module;
 
 import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
 import com.promise09th.mvvmproject.data.retrofit.RetrofitClient;

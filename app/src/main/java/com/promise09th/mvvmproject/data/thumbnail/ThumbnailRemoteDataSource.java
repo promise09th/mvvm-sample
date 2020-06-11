@@ -2,11 +2,11 @@ package com.promise09th.mvvmproject.data.thumbnail;
 
 import androidx.annotation.NonNull;
 
-import com.promise09th.mvvmproject.data.common.DocumentMapper;
+import com.promise09th.mvvmproject.data.mapper.DocumentMapper;
 import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
-import com.promise09th.mvvmproject.model.response.image.ImageResponse;
-import com.promise09th.mvvmproject.model.response.video.VideoResponse;
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
+import com.promise09th.mvvmproject.data.model.image.ImageResponse;
+import com.promise09th.mvvmproject.data.model.video.VideoResponse;
+import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @Singleton
-public class ThumbnailRemoteDataSource implements ThumbnailDataSource {
+public class ThumbnailRemoteDataSource {
 
     private KakaoRetrofitService mKakaoService;
 
@@ -29,8 +29,17 @@ public class ThumbnailRemoteDataSource implements ThumbnailDataSource {
         mKakaoService = kakaoService;
     }
 
-    @Override
-    public Single<ArrayList<Thumbnail>> getVideoThumbnail(String query) {
+    public Single<ArrayList<Thumbnail>> getAllThumbnail(String query) {
+        return Single.zip(
+                getVideoThumbnail(query),
+                getImageThumbnail(query),
+                (image, video) -> {
+                    image.addAll(video);
+                    return image;
+                });
+    }
+
+    private Single<ArrayList<Thumbnail>> getVideoThumbnail(String query) {
         return Single.create(e -> {
             Call<VideoResponse> imageThumbnailCall = mKakaoService.requestVideoThumbnail(query);
             imageThumbnailCall.enqueue(new Callback<VideoResponse>() {
@@ -55,8 +64,7 @@ public class ThumbnailRemoteDataSource implements ThumbnailDataSource {
         });
     }
 
-    @Override
-    public Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
+    private Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
         return Single.create(e -> {
             Call<ImageResponse> imageThumbnailCall = mKakaoService.requestImageThumbnail(query);
             imageThumbnailCall.enqueue(new Callback<ImageResponse>() {

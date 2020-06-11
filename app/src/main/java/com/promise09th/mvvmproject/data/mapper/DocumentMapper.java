@@ -1,11 +1,11 @@
-package com.promise09th.mvvmproject.data.common;
+package com.promise09th.mvvmproject.data.mapper;
 
 import android.text.TextUtils;
 
 import com.promise09th.mvvmproject.common.Constants;
-import com.promise09th.mvvmproject.model.response.image.ImageDocument;
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
-import com.promise09th.mvvmproject.model.response.video.VideoDocument;
+import com.promise09th.mvvmproject.data.model.image.ImageDocument;
+import com.promise09th.mvvmproject.presentation.model.Thumbnail;
+import com.promise09th.mvvmproject.data.model.video.VideoDocument;
 
 import java.util.Optional;
 
@@ -32,4 +32,6 @@ public class DocumentMapper {
                 .setType(Constants.VIDEO_TYPE)
                 .build();
     }
+
+
 }

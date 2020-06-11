@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.presentation.di.scope;
+package com.promise09th.mvvmproject.presentation.injection.scope;
 
 import androidx.lifecycle.ViewModel;
 

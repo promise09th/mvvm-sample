@@ -1,8 +1,9 @@
-package com.promise09th.mvvmproject.presentation.di.module;
+package com.promise09th.mvvmproject.presentation.injection.module;
 
 import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
 import com.promise09th.mvvmproject.data.thumbnail.ThumbnailLocalDataSource;
 import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRemoteDataSource;
+import com.promise09th.mvvmproject.db.database.AppDatabase;
 
 import javax.inject.Singleton;
 
@@ -14,8 +15,8 @@ public class DataSourceModule {
 
     @Singleton
     @Provides
-    public ThumbnailLocalDataSource provideThumbnailLocalDataSource() {
-        return new ThumbnailLocalDataSource();
+    public ThumbnailLocalDataSource provideThumbnailLocalDataSource(AppDatabase database) {
+        return new ThumbnailLocalDataSource(database);
     }
 
     @Singleton
