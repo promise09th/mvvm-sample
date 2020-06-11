@@ -2,7 +2,7 @@ package com.promise09th.mvvmproject;
 
 import android.util.Log;
 
-import com.promise09th.mvvmproject.presentation.di.component.DaggerAppComponent;
+import com.promise09th.mvvmproject.presentation.injection.component.DaggerAppComponent;
 
 import java.io.IOException;
 import java.net.SocketException;

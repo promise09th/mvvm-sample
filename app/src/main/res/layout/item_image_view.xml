@@ -9,10 +9,10 @@
             type="com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel" />
         <variable
             name="type"
-            type="com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel.ClickView" />
+            type="com.promise09th.mvvmproject.common.ViewType" />
         <variable
             name="thumbnail"
-            type="com.promise09th.mvvmproject.model.thumbnail.Thumbnail" />
+            type="com.promise09th.mvvmproject.presentation.model.Thumbnail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

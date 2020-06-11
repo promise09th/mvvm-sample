@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.presentation.di.module;
+package com.promise09th.mvvmproject.presentation.injection.module;
 
 import com.promise09th.mvvmproject.presentation.main.MyLockerFragment;
 import com.promise09th.mvvmproject.presentation.main.SearchResultFragment;

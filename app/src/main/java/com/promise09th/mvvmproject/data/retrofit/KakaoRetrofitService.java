@@ -1,8 +1,8 @@
 package com.promise09th.mvvmproject.data.retrofit;
 
 import com.promise09th.mvvmproject.common.KakaoApiKey;
-import com.promise09th.mvvmproject.model.response.image.ImageResponse;
-import com.promise09th.mvvmproject.model.response.video.VideoResponse;
+import com.promise09th.mvvmproject.data.model.image.ImageResponse;
+import com.promise09th.mvvmproject.data.model.video.VideoResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

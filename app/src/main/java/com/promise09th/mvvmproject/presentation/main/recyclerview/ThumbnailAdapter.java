@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.promise09th.mvvmproject.R;
 import com.promise09th.mvvmproject.common.Constants;
+import com.promise09th.mvvmproject.common.ViewType;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
-import com.promise09th.mvvmproject.model.thumbnail.Thumbnail;
 import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -24,9 +25,9 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
     private List<Thumbnail> mItems = new ArrayList<>();
 
     private ThumbnailViewModel mThumbnailViewModel;
-    private ThumbnailViewModel.ClickView mType;
+    private ViewType mType;
 
-    public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ThumbnailViewModel.ClickView type) {
+    public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ViewType type) {
         mThumbnailViewModel = thumbnailViewModel;
         mType = type;
     }

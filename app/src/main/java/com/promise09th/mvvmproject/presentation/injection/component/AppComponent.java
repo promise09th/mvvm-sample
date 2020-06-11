@@ -1,15 +1,16 @@
-package com.promise09th.mvvmproject.presentation.di.component;
+package com.promise09th.mvvmproject.presentation.injection.component;
 
 import android.app.Application;
 
 import com.promise09th.mvvmproject.MvvmApplication;
-import com.promise09th.mvvmproject.presentation.di.module.ActivityModule;
-import com.promise09th.mvvmproject.presentation.di.module.AppModule;
-import com.promise09th.mvvmproject.presentation.di.module.DataSourceModule;
-import com.promise09th.mvvmproject.presentation.di.module.FragmentModule;
-import com.promise09th.mvvmproject.presentation.di.module.RepositoryModule;
-import com.promise09th.mvvmproject.presentation.di.module.RetrofitModule;
-import com.promise09th.mvvmproject.presentation.di.module.ViewModelModule;
+import com.promise09th.mvvmproject.presentation.injection.module.ActivityModule;
+import com.promise09th.mvvmproject.presentation.injection.module.AppModule;
+import com.promise09th.mvvmproject.presentation.injection.module.DataSourceModule;
+import com.promise09th.mvvmproject.presentation.injection.module.DbModule;
+import com.promise09th.mvvmproject.presentation.injection.module.FragmentModule;
+import com.promise09th.mvvmproject.presentation.injection.module.RepositoryModule;
+import com.promise09th.mvvmproject.presentation.injection.module.RetrofitModule;
+import com.promise09th.mvvmproject.presentation.injection.module.ViewModelModule;
 
 import javax.inject.Singleton;
 
@@ -26,6 +27,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityModule.class,
         AppModule.class,
         DataSourceModule.class,
+        DbModule.class,
         FragmentModule.class,
         RepositoryModule.class,
         RetrofitModule.class,
