@@ -28,33 +28,33 @@ import io.reactivex.disposables.CompositeDisposable;
 public class MainActivity extends DaggerAppCompatActivity {
 
     @Inject
-    ViewModelFactory mViewModelFactory;
+    ViewModelFactory viewModelFactory;
 
-    private ThumbnailViewModel mThumbnailViewModel;
-    private ActivityMainBinding mBinding;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    private CompositeDisposable mDisposables = new CompositeDisposable();
+    private ThumbnailViewModel thumbnailViewModel;
+    private ActivityMainBinding binding;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mThumbnailViewModel = new ViewModelProvider(this, mViewModelFactory).get(ThumbnailViewModel.class);
+        thumbnailViewModel = new ViewModelProvider(this, viewModelFactory).get(ThumbnailViewModel.class);
 
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mBinding.setLifecycleOwner(this);
-        setSupportActionBar(mBinding.toolbar);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setLifecycleOwner(this);
+        setSupportActionBar(binding.toolbar);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = mBinding.viewPager;
+        ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
-        mBinding.tabs.setupWithViewPager(viewPager);
+        binding.tabs.setupWithViewPager(viewPager);
     }
 
     @Override
     protected void onDestroy() {
-        mDisposables.clear();
+        disposables.clear();
         super.onDestroy();
     }
 
@@ -68,7 +68,7 @@ public class MainActivity extends DaggerAppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String input) {
                 getThumbnail(input);
-                mBinding.viewPager.setCurrentItem(0);
+                binding.viewPager.setCurrentItem(0);
                 clearFragmentRecyclerviewPosition();
                 return false;
             }
@@ -82,14 +82,14 @@ public class MainActivity extends DaggerAppCompatActivity {
     }
 
     private void getThumbnail(String input) {
-        mDisposables.add(mThumbnailViewModel.getThumbnail(input)
+        disposables.add(thumbnailViewModel.getThumbnail(input)
                 .subscribe(
-                        receivedThumbnail -> mThumbnailViewModel.setSearchResultThumbnail(receivedThumbnail),
+                        receivedThumbnail -> thumbnailViewModel.setSearchResultThumbnail(receivedThumbnail),
                         e -> showErrorToast()));
     }
 
     private void showErrorToast() {
-        mHandler.post(() ->
+        handler.post(() ->
                 Toast.makeText(MainActivity.this, R.string.thumbnail_error, Toast.LENGTH_SHORT).show());
     }
 

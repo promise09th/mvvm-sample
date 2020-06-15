@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.data.thumbnail;
+package com.promise09th.mvvmproject.data.source;
 
 import com.promise09th.mvvmproject.db.mapper.EntityMapper;
 import com.promise09th.mvvmproject.db.database.AppDatabase;
@@ -18,15 +18,15 @@ import io.reactivex.schedulers.Schedulers;
 @Singleton
 public class ThumbnailLocalDataSource {
 
-    private AppDatabase mAppDatabase;
+    private AppDatabase appDatabase;
 
     @Inject
     public ThumbnailLocalDataSource(AppDatabase appDatabase) {
-        mAppDatabase = appDatabase;
+        this.appDatabase = appDatabase;
     }
 
     public Flowable<ArrayList<Thumbnail>> getAllThumbnail() {
-        return mAppDatabase.thumbnailDao().getAll()
+        return appDatabase.thumbnailDao().getAll()
                 .map(list -> list.stream()
                         .map(EntityMapper::mapToThumbanil)
                         .collect(Collectors.toCollection(ArrayList::new)))
@@ -35,13 +35,13 @@ public class ThumbnailLocalDataSource {
     }
 
     public Completable insertThumbnail(Thumbnail thumbnail) {
-        return mAppDatabase.thumbnailDao().insertThumbnail(EntityMapper.mapToThumbanilEntity(thumbnail))
+        return appDatabase.thumbnailDao().insertThumbnail(EntityMapper.mapToThumbanilEntity(thumbnail))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Completable deleteThumbnail(Thumbnail thumbnail) {
-        return mAppDatabase.thumbnailDao().deleteThumbnail(EntityMapper.mapToThumbanilEntity(thumbnail))
+        return appDatabase.thumbnailDao().deleteThumbnail(EntityMapper.mapToThumbanilEntity(thumbnail))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

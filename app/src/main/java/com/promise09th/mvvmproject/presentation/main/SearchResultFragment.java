@@ -28,11 +28,11 @@ import dagger.android.support.DaggerFragment;
 public class SearchResultFragment extends DaggerFragment implements PresetPosition {
 
     @Inject
-    ViewModelFactory mViewModelFactory;
+    ViewModelFactory viewModelFactory;
 
-    private ThumbnailViewModel mThumbnailViewModel;
-    private ThumbnailAdapter mAdapter;
-    private FragmentSearchResultBinding mBinding;
+    private ThumbnailViewModel thumbnailViewModel;
+    private ThumbnailAdapter adapter;
+    private FragmentSearchResultBinding binding;
 
     public static SearchResultFragment newInstance() {
         SearchResultFragment fragment = new SearchResultFragment();
@@ -43,28 +43,28 @@ public class SearchResultFragment extends DaggerFragment implements PresetPositi
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mThumbnailViewModel = new ViewModelProvider(getActivity(), mViewModelFactory).get(ThumbnailViewModel.class);
+        thumbnailViewModel = new ViewModelProvider(getActivity(), viewModelFactory).get(ThumbnailViewModel.class);
 
-        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ViewType.SEARCH);
+        adapter = new ThumbnailAdapter(thumbnailViewModel, ViewType.SEARCH);
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false);
-        mBinding.setViewModel(mThumbnailViewModel);
-        mBinding.searchResultRecyclerview.setAdapter(mAdapter);
-        mBinding.setLifecycleOwner(getActivity());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_result, container, false);
+        binding.setViewModel(thumbnailViewModel);
+        binding.searchResultRecyclerview.setAdapter(adapter);
+        binding.setLifecycleOwner(getActivity());
 
         bindClicked();
 
-        return mBinding.getRoot();
+        return binding.getRoot();
     }
 
     private void bindClicked() {
-        mThumbnailViewModel.getSearchResultItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
+        thumbnailViewModel.getSearchResultItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
             Thumbnail thumbnail = thumbnailEvent.getContentIfNotHandled();
             if (thumbnail == null) {
                 return;
             }
 
-            if (mThumbnailViewModel.containsSavedThumbnail(thumbnail)) {
+            if (thumbnailViewModel.containsSavedThumbnail(thumbnail)) {
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.note)
                         .setMessage(R.string.mylocker_thumbnail_already_added)
@@ -79,7 +79,7 @@ public class SearchResultFragment extends DaggerFragment implements PresetPositi
                     .setMessage(R.string.mylocker_thumbnail_add)
                     .setNegativeButton(R.string.btn_cancel, null)
                     .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
-                            mThumbnailViewModel.setSavedThumbnail(thumbnail))
+                            thumbnailViewModel.setSavedThumbnail(thumbnail))
                     .create();
             dialog.show();
         });
@@ -87,6 +87,6 @@ public class SearchResultFragment extends DaggerFragment implements PresetPositi
 
     @Override
     public void clearPosition() {
-        mBinding.searchResultRecyclerview.scrollToPosition(0);
+        binding.searchResultRecyclerview.scrollToPosition(0);
     }
 }

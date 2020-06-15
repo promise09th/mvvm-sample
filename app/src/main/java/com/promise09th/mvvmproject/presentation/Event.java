@@ -2,7 +2,7 @@ package com.promise09th.mvvmproject.presentation;
 
 public class Event<T> {
 
-    private T mContent;
+    private T content;
 
     private boolean hasBeenHandled = false;
 
@@ -10,7 +10,7 @@ public class Event<T> {
         if (content == null) {
             throw new IllegalArgumentException("null values in Event are not allowed.");
         }
-        mContent = content;
+        this.content = content;
     }
 
     public T getContentIfNotHandled() {
@@ -18,7 +18,7 @@ public class Event<T> {
             return null;
         } else {
             hasBeenHandled = true;
-            return mContent;
+            return content;
         }
     }
 

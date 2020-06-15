@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.data.model.video;
+package com.promise09th.mvvmproject.remote.model.video;
 
 import com.google.gson.annotations.SerializedName;
 

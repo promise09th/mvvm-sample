@@ -28,11 +28,11 @@ import dagger.android.support.DaggerFragment;
 public class MyLockerFragment extends DaggerFragment implements PresetPosition {
 
     @Inject
-    ViewModelFactory mViewModelFactory;
+    ViewModelFactory viewModelFactory;
 
-    private ThumbnailViewModel mThumbnailViewModel;
-    private ThumbnailAdapter mAdapter;
-    private FragmentMyLockerBinding mBinding;
+    private ThumbnailViewModel thumbnailViewModel;
+    private ThumbnailAdapter adapter;
+    private FragmentMyLockerBinding binding;
 
     public static MyLockerFragment newInstance() {
         MyLockerFragment fragment = new MyLockerFragment();
@@ -43,24 +43,24 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mThumbnailViewModel = new ViewModelProvider(getActivity(), mViewModelFactory).get(ThumbnailViewModel.class);
+        thumbnailViewModel = new ViewModelProvider(getActivity(), viewModelFactory).get(ThumbnailViewModel.class);
 
-        mAdapter = new ThumbnailAdapter(mThumbnailViewModel, ViewType.LOCKER);
+        adapter = new ThumbnailAdapter(thumbnailViewModel, ViewType.LOCKER);
 
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
-        mBinding.setViewModel(mThumbnailViewModel);
-        mBinding.mylockerRecyclerview.setAdapter(mAdapter);
-        mBinding.setLifecycleOwner(getActivity());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
+        binding.setViewModel(thumbnailViewModel);
+        binding.mylockerRecyclerview.setAdapter(adapter);
+        binding.setLifecycleOwner(getActivity());
 
         bindClicked();
 
-        mThumbnailViewModel.fetchMyLockerThumbnails();
+        thumbnailViewModel.fetchMyLockerThumbnails();
 
-        return mBinding.getRoot();
+        return binding.getRoot();
     }
 
     private void bindClicked() {
-        mThumbnailViewModel.getMyLockerItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
+        thumbnailViewModel.getMyLockerItemClicked().observe(getViewLifecycleOwner(), thumbnailEvent -> {
             Thumbnail thumbnail = thumbnailEvent.getContentIfNotHandled();
             if (thumbnail == null) {
                 return;
@@ -71,7 +71,7 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
                     .setMessage(R.string.mylocker_thumbnail_delete)
                     .setNegativeButton(R.string.btn_cancel, null)
                     .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
-                            mThumbnailViewModel.removeSavedThumbnail(thumbnail))
+                            thumbnailViewModel.removeSavedThumbnail(thumbnail))
                     .create();
             dialog.show();
         });
@@ -79,6 +79,6 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
 
     @Override
     public void clearPosition() {
-        mBinding.mylockerRecyclerview.scrollToPosition(0);
+        binding.mylockerRecyclerview.scrollToPosition(0);
     }
 }

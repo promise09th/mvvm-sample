@@ -1,11 +1,11 @@
-package com.promise09th.mvvmproject.data.thumbnail;
+package com.promise09th.mvvmproject.data.source;
 
 import androidx.annotation.NonNull;
 
-import com.promise09th.mvvmproject.data.mapper.DocumentMapper;
-import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
-import com.promise09th.mvvmproject.data.model.image.ImageResponse;
-import com.promise09th.mvvmproject.data.model.video.VideoResponse;
+import com.promise09th.mvvmproject.remote.mapper.DocumentMapper;
+import com.promise09th.mvvmproject.remote.kakao.KakaoRetrofitService;
+import com.promise09th.mvvmproject.remote.model.image.ImageResponse;
+import com.promise09th.mvvmproject.remote.model.video.VideoResponse;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import java.util.ArrayList;
@@ -22,11 +22,11 @@ import retrofit2.Response;
 @Singleton
 public class ThumbnailRemoteDataSource {
 
-    private KakaoRetrofitService mKakaoService;
+    private KakaoRetrofitService kakaoService;
 
     @Inject
     public ThumbnailRemoteDataSource(KakaoRetrofitService kakaoService) {
-        mKakaoService = kakaoService;
+        this.kakaoService = kakaoService;
     }
 
     public Single<ArrayList<Thumbnail>> getAllThumbnail(String query) {
@@ -41,7 +41,7 @@ public class ThumbnailRemoteDataSource {
 
     private Single<ArrayList<Thumbnail>> getVideoThumbnail(String query) {
         return Single.create(e -> {
-            Call<VideoResponse> imageThumbnailCall = mKakaoService.requestVideoThumbnail(query);
+            Call<VideoResponse> imageThumbnailCall = kakaoService.requestVideoThumbnail(query);
             imageThumbnailCall.enqueue(new Callback<VideoResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<VideoResponse> call, @NonNull Response<VideoResponse> response) {
@@ -66,7 +66,7 @@ public class ThumbnailRemoteDataSource {
 
     private Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
         return Single.create(e -> {
-            Call<ImageResponse> imageThumbnailCall = mKakaoService.requestImageThumbnail(query);
+            Call<ImageResponse> imageThumbnailCall = kakaoService.requestImageThumbnail(query);
             imageThumbnailCall.enqueue(new Callback<ImageResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {

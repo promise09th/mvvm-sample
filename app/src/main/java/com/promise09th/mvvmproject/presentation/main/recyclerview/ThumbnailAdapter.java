@@ -22,14 +22,14 @@ import java.util.List;
 
 public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
 
-    private List<Thumbnail> mItems = new ArrayList<>();
+    private List<Thumbnail> items = new ArrayList<>();
 
-    private ThumbnailViewModel mThumbnailViewModel;
-    private ViewType mType;
+    private ThumbnailViewModel thumbnailViewModel;
+    private ViewType viewType;
 
-    public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ViewType type) {
-        mThumbnailViewModel = thumbnailViewModel;
-        mType = type;
+    public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ViewType viewType) {
+        this.thumbnailViewModel = thumbnailViewModel;
+        this.viewType = viewType;
     }
 
     @Override
@@ -37,28 +37,28 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
     public ThumbnailHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemImageViewBinding binding = ItemImageViewBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
-        return new ThumbnailHolder(binding, mThumbnailViewModel, mType);
+        return new ThumbnailHolder(binding, thumbnailViewModel, this.viewType);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ThumbnailHolder holder, int position) {
-        holder.bind(mItems.get(position));
+        holder.bind(items.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return items.size();
     }
 
     @Override
     public long getItemId(int position) {
-        return mItems.get(position).hashCode();
+        return items.get(position).hashCode();
     }
 
     public void setItem(List<Thumbnail> items) {
         if (items != null) {
-            mItems.clear();
-            mItems.addAll(items);
+            this.items.clear();
+            this.items.addAll(items);
             notifyDataSetChanged();
         }
     }

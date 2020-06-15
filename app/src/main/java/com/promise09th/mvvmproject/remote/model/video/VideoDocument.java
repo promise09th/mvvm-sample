@@ -1,52 +1,52 @@
-package com.promise09th.mvvmproject.data.model.video;
+package com.promise09th.mvvmproject.remote.model.video;
 
 import com.google.gson.annotations.SerializedName;
 
 public class VideoDocument {
 
     @SerializedName("title")
-    private String mTitle;
+    private String title;
 
     @SerializedName("url")
-    private String mDocUrl;
+    private String docUrl;
 
     @SerializedName("datetime")
-    private String mDateTime;
+    private String dateTime;
 
     @SerializedName("play_time")
-    private String mPlayTime;
+    private String playTime;
 
     @SerializedName("thumbnail")
-    private String mThumbnailUrl;
+    private String thumbnailUrl;
 
     @SerializedName("author")
-    private String mAuthor;
+    private String author;
 
     public VideoDocument() {
 
     }
 
     public String getTitle() {
-        return mTitle;
+        return this.title;
     }
 
     public String getDocUrl() {
-        return mDocUrl;
+        return this.docUrl;
     }
 
     public String getDateTime() {
-        return mDateTime;
+        return this.dateTime;
     }
 
     public String getPlayTime() {
-        return mPlayTime;
+        return this.playTime;
     }
 
     public String getThumbnailUrl() {
-        return mThumbnailUrl;
+        return this.thumbnailUrl;
     }
 
     public String getAuthor() {
-        return mAuthor;
+        return this.author;
     }
 }

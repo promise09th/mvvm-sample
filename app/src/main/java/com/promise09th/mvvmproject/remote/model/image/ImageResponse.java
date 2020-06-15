@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.data.model.image;
+package com.promise09th.mvvmproject.remote.model.image;
 
 import com.google.gson.annotations.SerializedName;
 
