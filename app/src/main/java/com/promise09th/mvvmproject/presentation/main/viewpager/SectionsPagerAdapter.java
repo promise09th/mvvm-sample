@@ -26,11 +26,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             R.string.tab_text_1,
             R.string.tab_text_2
     };
-    private final Context mContext;
+    private final Context context;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        mContext = context;
+        this.context = context;
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return context.getResources().getString(TAB_TITLES[position]);
     }
 
     @Override

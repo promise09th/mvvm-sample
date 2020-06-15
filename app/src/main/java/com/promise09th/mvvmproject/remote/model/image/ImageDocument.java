@@ -1,65 +1,65 @@
-package com.promise09th.mvvmproject.data.model.image;
+package com.promise09th.mvvmproject.remote.model.image;
 
 import com.google.gson.annotations.SerializedName;
 
 public class ImageDocument {
     @SerializedName("collection")
-    private String mCollection;
+    private String collection;
 
     @SerializedName("thumbnail_url")
-    private String mThumbnailUrl;
+    private String thumbnailUrl;
 
     @SerializedName("image_url")
-    private String mImageUrl;
+    private String imageUrl;
 
     @SerializedName("mWidth")
-    private int mWidth;
+    private int width;
 
     @SerializedName("height")
-    private int mHeight;
+    private int height;
 
     @SerializedName("display_sitename")
-    private String mDisplaySiteName;
+    private String displaySiteName;
 
     @SerializedName("doc_url")
-    private String mDocUrl;
+    private String docUrl;
 
     @SerializedName("datetime")
-    private String mDateTime;
+    private String dateTime;
 
     public ImageDocument() {
 
     }
 
     public String getCollection() {
-        return mCollection;
+        return this.collection;
     }
 
     public String getThumbnailUrl() {
-        return mThumbnailUrl;
+        return this.thumbnailUrl;
     }
 
     public String getImageUrl() {
-        return mImageUrl;
+        return this.imageUrl;
     }
 
     public int getWidth() {
-        return mWidth;
+        return this.width;
     }
 
     public int getHeight() {
-        return mHeight;
+        return this.height;
     }
 
     public String getDisplaySiteName() {
-        return mDisplaySiteName;
+        return this.displaySiteName;
     }
 
     public String getDocUrl() {
-        return mDocUrl;
+        return this.docUrl;
     }
 
     public String getDateTime() {
-        return mDateTime;
+        return this.dateTime;
     }
 }

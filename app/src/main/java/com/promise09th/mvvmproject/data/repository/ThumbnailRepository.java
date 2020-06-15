@@ -1,7 +1,9 @@
-package com.promise09th.mvvmproject.data.thumbnail;
+package com.promise09th.mvvmproject.data.repository;
 
 import androidx.annotation.NonNull;
 
+import com.promise09th.mvvmproject.data.source.ThumbnailLocalDataSource;
+import com.promise09th.mvvmproject.data.source.ThumbnailRemoteDataSource;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import java.util.ArrayList;
@@ -16,29 +18,29 @@ import io.reactivex.Single;
 @Singleton
 public class ThumbnailRepository {
 
-    private ThumbnailLocalDataSource mLocalDataSource;
-    private ThumbnailRemoteDataSource mRemoteDataSource;
+    private ThumbnailLocalDataSource localDataSource;
+    private ThumbnailRemoteDataSource remoteDataSource;
 
     @Inject
     public ThumbnailRepository(@NonNull ThumbnailLocalDataSource local,
                                 @NonNull ThumbnailRemoteDataSource remote) {
-        mLocalDataSource = local;
-        mRemoteDataSource = remote;
+        localDataSource = local;
+        remoteDataSource = remote;
     }
 
     public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
-        return mRemoteDataSource.getAllThumbnail(query);
+        return remoteDataSource.getAllThumbnail(query);
     }
 
     public Flowable<ArrayList<Thumbnail>> getAllThumbnail() {
-        return mLocalDataSource.getAllThumbnail();
+        return localDataSource.getAllThumbnail();
     }
 
     public Completable saveThumbnail(Thumbnail thumbnail) {
-        return mLocalDataSource.insertThumbnail(thumbnail);
+        return localDataSource.insertThumbnail(thumbnail);
     }
 
     public Completable deleteThumbnail(Thumbnail thumbnail) {
-        return mLocalDataSource.deleteThumbnail(thumbnail);
+        return localDataSource.deleteThumbnail(thumbnail);
     }
 }

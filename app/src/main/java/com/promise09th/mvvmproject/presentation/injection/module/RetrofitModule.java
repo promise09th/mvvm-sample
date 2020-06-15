@@ -1,7 +1,7 @@
 package com.promise09th.mvvmproject.presentation.injection.module;
 
-import com.promise09th.mvvmproject.data.retrofit.KakaoRetrofitService;
-import com.promise09th.mvvmproject.data.retrofit.RetrofitClient;
+import com.promise09th.mvvmproject.remote.kakao.KakaoRetrofitService;
+import com.promise09th.mvvmproject.remote.RetrofitClient;
 
 import javax.inject.Singleton;
 

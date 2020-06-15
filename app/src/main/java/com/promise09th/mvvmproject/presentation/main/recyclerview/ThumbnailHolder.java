@@ -8,21 +8,21 @@ import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
 
 public class ThumbnailHolder extends RecyclerView.ViewHolder {
-    private ItemImageViewBinding mBinding;
-    private ThumbnailViewModel mThumbnailViewModel;
-    private ViewType mType;
+    private ItemImageViewBinding binding;
+    private ThumbnailViewModel thumbnailViewModel;
+    private ViewType viewType;
 
-    ThumbnailHolder(ItemImageViewBinding binding, ThumbnailViewModel thumbnailViewModel, ViewType type) {
+    ThumbnailHolder(ItemImageViewBinding binding, ThumbnailViewModel thumbnailViewModel, ViewType viewType) {
         super(binding.getRoot());
-        mBinding = binding;
+        this.binding = binding;
 
-        mThumbnailViewModel = thumbnailViewModel;
-        mType = type;
+        this.thumbnailViewModel = thumbnailViewModel;
+        this.viewType = viewType;
     }
 
     public void bind(Thumbnail thumbnail) {
-        mBinding.setViewModel(mThumbnailViewModel);
-        mBinding.setType(mType);
-        mBinding.setThumbnail(thumbnail);
+        binding.setViewModel(thumbnailViewModel);
+        binding.setType(viewType);
+        binding.setThumbnail(thumbnail);
     }
 }

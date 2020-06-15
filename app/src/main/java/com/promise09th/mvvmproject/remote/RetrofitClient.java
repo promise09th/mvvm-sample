@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.data.retrofit;
+package com.promise09th.mvvmproject.remote;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

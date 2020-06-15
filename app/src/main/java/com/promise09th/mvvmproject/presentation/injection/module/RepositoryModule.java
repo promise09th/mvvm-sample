@@ -1,8 +1,8 @@
 package com.promise09th.mvvmproject.presentation.injection.module;
 
-import com.promise09th.mvvmproject.data.thumbnail.ThumbnailLocalDataSource;
-import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRemoteDataSource;
-import com.promise09th.mvvmproject.data.thumbnail.ThumbnailRepository;
+import com.promise09th.mvvmproject.data.source.ThumbnailLocalDataSource;
+import com.promise09th.mvvmproject.data.source.ThumbnailRemoteDataSource;
+import com.promise09th.mvvmproject.data.repository.ThumbnailRepository;
 
 import javax.inject.Singleton;
 
