@@ -53,6 +53,39 @@ public class ThumbnailViewModel extends ViewModel {
         return searchResultThumbnail;
     }
 
+    public boolean containsSavedThumbnail(Thumbnail savedThumbnail) {
+        ArrayList<Thumbnail> list = getSavedThumbnail().getValue();
+        return list != null && list.contains(savedThumbnail);
+    }
+
+    public LiveData<ArrayList<Thumbnail>> getSavedThumbnail() {
+        return savedThumbnail;
+    }
+
+    public MutableLiveData<Event<Thumbnail>> getSearchResultItemClicked() {
+        return searchResultItemClicked;
+    }
+
+    public MutableLiveData<Event<Thumbnail>> getMyLockerItemClicked() {
+        return myLockerItemClicked;
+    }
+
+    private void setSearchResultItemClicked(Thumbnail thumbnail) {
+        searchResultItemClicked.setValue(new Event<>(thumbnail));
+    }
+
+    private void setMyLockerItemClicked(Thumbnail thumbnail) {
+        myLockerItemClicked.setValue(new Event<>(thumbnail));
+    }
+
+    public void onClickItem(ViewType type, Thumbnail thumbnail) {
+        if (type == ViewType.SEARCH) {
+            setSearchResultItemClicked(thumbnail);
+        } else { // ClickView.LOCKER
+            setMyLockerItemClicked(thumbnail);
+        }
+    }
+
     public void fetchMyLockerThumbnails() {
         // Room DB에서 Flowable 사용 시, complete가 불리지 않고 계속 Observing 함
         disposables.add(thumbnailRepository.getAllThumbnail().subscribe(
@@ -64,11 +97,6 @@ public class ThumbnailViewModel extends ViewModel {
                 e -> Log.d(TAG, "fetchMyLocker() : fail"),
                 () -> Log.d(TAG, "fetchMyLocker() : complete")
         ));
-    }
-
-    public boolean containsSavedThumbnail(Thumbnail savedThumbnail) {
-        ArrayList<Thumbnail> list = getSavedThumbnail().getValue();
-        return list != null && list.contains(savedThumbnail);
     }
 
     public void setSavedThumbnail(Thumbnail savedThumbnail) {
@@ -88,35 +116,7 @@ public class ThumbnailViewModel extends ViewModel {
         }
     }
 
-    public LiveData<ArrayList<Thumbnail>> getSavedThumbnail() {
-        return savedThumbnail;
-    }
-
     public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
         return thumbnailRepository.getThumbnail(query);
-    }
-
-    public MutableLiveData<Event<Thumbnail>> getSearchResultItemClicked() {
-        return searchResultItemClicked;
-    }
-
-    public MutableLiveData<Event<Thumbnail>> getMyLockerItemClicked() {
-        return myLockerItemClicked;
-    }
-
-    public void onClickItem(ViewType type, Thumbnail thumbnail) {
-        if (type == ViewType.SEARCH) {
-            setSearchResultItemClicked(thumbnail);
-        } else { // ClickView.LOCKER
-            setMyLockerItemClicked(thumbnail);
-        }
-    }
-
-    private void setSearchResultItemClicked(Thumbnail thumbnail) {
-        searchResultItemClicked.setValue(new Event<>(thumbnail));
-    }
-
-    private void setMyLockerItemClicked(Thumbnail thumbnail) {
-        myLockerItemClicked.setValue(new Event<>(thumbnail));
     }
 }
