@@ -2,13 +2,15 @@ package com.promise09th.mvvmproject.presentation.main;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.promise09th.mvvmproject.common.ViewType;
-import com.promise09th.mvvmproject.data.repository.ThumbnailRepository;
+import com.promise09th.mvvmproject.domain.thumbnail.DeleteThumbnailUseCase;
+import com.promise09th.mvvmproject.domain.thumbnail.GetAllThumbnailUseCase;
+import com.promise09th.mvvmproject.domain.thumbnail.GetThumbanilUseCase;
+import com.promise09th.mvvmproject.domain.thumbnail.SaveThumbanilUseCase;
 import com.promise09th.mvvmproject.presentation.Event;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
@@ -22,7 +24,11 @@ public class ThumbnailViewModel extends ViewModel {
 
     private static final String TAG = ThumbnailViewModel.class.getSimpleName();
 
-    private ThumbnailRepository thumbnailRepository;
+    // UseCases
+    private DeleteThumbnailUseCase deleteThumbnailUseCase;
+    private GetAllThumbnailUseCase getAllThumbnailUseCase;
+    private GetThumbanilUseCase getThumbanilUseCase;
+    private SaveThumbanilUseCase saveThumbanilUseCase;
 
     private MutableLiveData<ArrayList<Thumbnail>> searchResultThumbnail = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Thumbnail>> savedThumbnail = new MutableLiveData<>();
@@ -34,8 +40,15 @@ public class ThumbnailViewModel extends ViewModel {
     private CompositeDisposable disposables = new CompositeDisposable();
 
     @Inject
-    public ThumbnailViewModel(@NonNull ThumbnailRepository thumbnailRepository) {
-        this.thumbnailRepository = thumbnailRepository;
+    public ThumbnailViewModel(
+            DeleteThumbnailUseCase deleteThumbnailUseCase,
+            GetAllThumbnailUseCase getAllThumbnailUseCase,
+            GetThumbanilUseCase getThumbanilUseCase,
+            SaveThumbanilUseCase saveThumbanilUseCase) {
+        this.deleteThumbnailUseCase = deleteThumbnailUseCase;
+        this.getAllThumbnailUseCase = getAllThumbnailUseCase;
+        this.getThumbanilUseCase = getThumbanilUseCase;
+        this.saveThumbanilUseCase = saveThumbanilUseCase;
     }
 
     @Override
@@ -92,7 +105,7 @@ public class ThumbnailViewModel extends ViewModel {
 
     public void fetchMyLockerThumbnails() {
         // Room DB에서 Flowable 사용 시, complete가 불리지 않고 계속 Observing 함
-        disposables.add(thumbnailRepository.getAllThumbnail().subscribe(
+        disposables.add(getAllThumbnailUseCase.execute().subscribe(
                 thumbnails -> {
                     Log.d(TAG, "fetchMyLocker : onNext : " + thumbnails.size());
                     thumbnails.sort((t1, t2) -> t2.getDateTime().compareToIgnoreCase(t1.getDateTime()));
@@ -104,7 +117,7 @@ public class ThumbnailViewModel extends ViewModel {
     }
 
     public void setSavedThumbnail(Thumbnail savedThumbnail) {
-        disposables.add(thumbnailRepository.saveThumbnail(savedThumbnail).subscribe(
+        disposables.add(saveThumbanilUseCase.execute(savedThumbnail).subscribe(
                 () -> Log.d(TAG, "save : success"),
                 e -> Log.d(TAG, "save : fail")
         ));
@@ -113,7 +126,7 @@ public class ThumbnailViewModel extends ViewModel {
     public void removeSavedThumbnail(Thumbnail savedThumbnail) {
         ArrayList<Thumbnail> list = getSavedThumbnail().getValue();
         if (list != null && list.contains(savedThumbnail)) {
-            disposables.add(thumbnailRepository.deleteThumbnail(savedThumbnail).subscribe(
+            disposables.add(deleteThumbnailUseCase.execute(savedThumbnail).subscribe(
                     () -> Log.d(TAG, "delete : success"),
                     e -> Log.d(TAG, "delete : fail")
             ));
@@ -121,10 +134,9 @@ public class ThumbnailViewModel extends ViewModel {
     }
 
     public void fetchThumbnail(String query) {
-        disposables.add(thumbnailRepository.getThumbnail(query)
-                .subscribe(
-                        this::setSearchResultThumbnail,
-                        e -> errorToastShown.setValue(new Event<>(Boolean.TRUE))
-                ));
+        disposables.add(getThumbanilUseCase.execute(query).subscribe(
+                this::setSearchResultThumbnail,
+                e -> errorToastShown.setValue(new Event<>(Boolean.TRUE))
+        ));
     }
 }
