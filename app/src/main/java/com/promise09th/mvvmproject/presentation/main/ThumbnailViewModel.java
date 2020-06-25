@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 
 public class ThumbnailViewModel extends ViewModel {
@@ -30,6 +29,7 @@ public class ThumbnailViewModel extends ViewModel {
 
     private MutableLiveData<Event<Thumbnail>> searchResultItemClicked = new MutableLiveData<>();
     private MutableLiveData<Event<Thumbnail>> myLockerItemClicked = new MutableLiveData<>();
+    private MutableLiveData<Event<Boolean>> errorToastShown = new MutableLiveData<>();
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -68,6 +68,10 @@ public class ThumbnailViewModel extends ViewModel {
 
     public MutableLiveData<Event<Thumbnail>> getMyLockerItemClicked() {
         return myLockerItemClicked;
+    }
+
+    public LiveData<Event<Boolean>> getErrorToastShown() {
+        return errorToastShown;
     }
 
     private void setSearchResultItemClicked(Thumbnail thumbnail) {
@@ -116,7 +120,11 @@ public class ThumbnailViewModel extends ViewModel {
         }
     }
 
-    public Single<ArrayList<Thumbnail>> getThumbnail(String query) {
-        return thumbnailRepository.getThumbnail(query);
+    public void fetchThumbnail(String query) {
+        disposables.add(thumbnailRepository.getThumbnail(query)
+                .subscribe(
+                        this::setSearchResultThumbnail,
+                        e -> errorToastShown.setValue(new Event<>(Boolean.TRUE))
+                ));
     }
 }

@@ -50,6 +50,20 @@ public class MainActivity extends DaggerAppCompatActivity {
         ViewPager viewPager = binding.viewPager;
         viewPager.setAdapter(sectionsPagerAdapter);
         binding.tabs.setupWithViewPager(viewPager);
+
+        setupEvent();
+    }
+
+    private void setupEvent() {
+        thumbnailViewModel.getErrorToastShown().observe(this, toastEvent -> {
+            Boolean state = toastEvent.getContentIfNotHandled();
+            if (state == null) {
+                return;
+            }
+            if (state) {
+                showErrorToast();
+            }
+        });
     }
 
     @Override
@@ -82,10 +96,7 @@ public class MainActivity extends DaggerAppCompatActivity {
     }
 
     private void getThumbnail(String input) {
-        disposables.add(thumbnailViewModel.getThumbnail(input)
-                .subscribe(
-                        receivedThumbnail -> thumbnailViewModel.setSearchResultThumbnail(receivedThumbnail),
-                        e -> showErrorToast()));
+        thumbnailViewModel.fetchThumbnail(input);
     }
 
     private void showErrorToast() {
