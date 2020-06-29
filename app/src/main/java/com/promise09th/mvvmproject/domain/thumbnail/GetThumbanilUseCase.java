@@ -6,12 +6,15 @@ import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.Single;
 
 public class GetThumbanilUseCase implements UseCase {
 
     private ThumbnailRepository thumbnailRepository;
 
+    @Inject
     public GetThumbanilUseCase(ThumbnailRepository thumbnailRepository) {
         this.thumbnailRepository = thumbnailRepository;
     }
