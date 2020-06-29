@@ -2,10 +2,10 @@ package com.promise09th.mvvmproject.presentation.main.recyclerview;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.promise09th.mvvmproject.common.ViewType;
+import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
-import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 
 public class ThumbnailHolder extends RecyclerView.ViewHolder {
     private ItemImageViewBinding binding;

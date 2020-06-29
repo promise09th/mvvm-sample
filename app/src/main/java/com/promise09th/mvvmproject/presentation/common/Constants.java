@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.common;
+package com.promise09th.mvvmproject.presentation.common;
 
 public class Constants {
     public static final String VIDEO_TYPE = "VIDEO_TYPE";

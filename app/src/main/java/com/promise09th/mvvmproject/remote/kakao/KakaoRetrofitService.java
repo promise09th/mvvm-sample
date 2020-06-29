@@ -1,6 +1,5 @@
 package com.promise09th.mvvmproject.remote.kakao;
 
-import com.promise09th.mvvmproject.common.KakaoApiKey;
 import com.promise09th.mvvmproject.remote.model.image.ImageResponse;
 import com.promise09th.mvvmproject.remote.model.video.VideoResponse;
 

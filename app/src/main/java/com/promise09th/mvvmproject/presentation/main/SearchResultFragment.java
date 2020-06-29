@@ -11,11 +11,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.common.PresetPosition;
-import com.promise09th.mvvmproject.common.ViewType;
+import com.promise09th.mvvmproject.presentation.common.PresetPosition;
+import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.databinding.FragmentSearchResultBinding;
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
 import com.promise09th.mvvmproject.presentation.main.recyclerview.ThumbnailAdapter;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 
 import javax.inject.Inject;

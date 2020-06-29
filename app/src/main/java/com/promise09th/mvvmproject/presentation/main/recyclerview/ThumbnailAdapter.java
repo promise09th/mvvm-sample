@@ -10,10 +10,10 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.common.Constants;
-import com.promise09th.mvvmproject.common.ViewType;
+import com.promise09th.mvvmproject.presentation.common.Constants;
+import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
-import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import com.squareup.picasso.Picasso;
 

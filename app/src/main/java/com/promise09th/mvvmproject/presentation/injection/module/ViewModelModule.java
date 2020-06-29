@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
 import com.promise09th.mvvmproject.presentation.injection.scope.ViewModelKey;
-import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 
 import dagger.Binds;
 import dagger.Module;

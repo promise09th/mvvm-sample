@@ -9,7 +9,7 @@ import com.promise09th.mvvmproject.domain.thumbnail.DeleteThumbnailUseCase;
 import com.promise09th.mvvmproject.domain.thumbnail.GetAllThumbnailUseCase;
 import com.promise09th.mvvmproject.domain.thumbnail.GetThumbanilUseCase;
 import com.promise09th.mvvmproject.domain.thumbnail.SaveThumbanilUseCase;
-import com.promise09th.mvvmproject.presentation.main.ThumbnailViewModel;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
