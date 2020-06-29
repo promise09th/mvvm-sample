@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.utils;
+package com.promise09th.mvvmproject.presentation.common;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

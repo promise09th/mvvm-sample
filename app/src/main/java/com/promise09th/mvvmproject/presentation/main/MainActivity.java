@@ -13,9 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.common.PresetPosition;
+import com.promise09th.mvvmproject.presentation.common.PresetPosition;
 import com.promise09th.mvvmproject.databinding.ActivityMainBinding;
 import com.promise09th.mvvmproject.presentation.ViewModelFactory;
+import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 import com.promise09th.mvvmproject.presentation.main.viewpager.SectionsPagerAdapter;
 
 import java.util.List;

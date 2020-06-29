@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.presentation.main;
+package com.promise09th.mvvmproject.presentation.main.viewmodel;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.promise09th.mvvmproject.common.ViewType;
+import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.domain.thumbnail.DeleteThumbnailUseCase;
 import com.promise09th.mvvmproject.domain.thumbnail.GetAllThumbnailUseCase;
 import com.promise09th.mvvmproject.domain.thumbnail.GetThumbanilUseCase;

@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.common;
+package com.promise09th.mvvmproject.remote.kakao;
 
 import com.promise09th.mvvmproject.BuildConfig;
 

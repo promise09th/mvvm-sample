@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject.common;
+package com.promise09th.mvvmproject.presentation.common;
 
 @FunctionalInterface
 public interface PresetPosition {

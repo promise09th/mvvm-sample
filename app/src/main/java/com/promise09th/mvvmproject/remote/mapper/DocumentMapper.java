@@ -2,7 +2,7 @@ package com.promise09th.mvvmproject.remote.mapper;
 
 import android.text.TextUtils;
 
-import com.promise09th.mvvmproject.common.Constants;
+import com.promise09th.mvvmproject.presentation.common.Constants;
 import com.promise09th.mvvmproject.remote.model.image.ImageDocument;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import com.promise09th.mvvmproject.remote.model.video.VideoDocument;
