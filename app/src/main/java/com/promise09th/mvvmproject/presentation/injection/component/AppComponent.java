@@ -7,7 +7,6 @@ import com.promise09th.mvvmproject.presentation.injection.module.ActivityModule;
 import com.promise09th.mvvmproject.presentation.injection.module.AppModule;
 import com.promise09th.mvvmproject.presentation.injection.module.DataSourceModule;
 import com.promise09th.mvvmproject.presentation.injection.module.DbModule;
-import com.promise09th.mvvmproject.presentation.injection.module.FragmentModule;
 import com.promise09th.mvvmproject.presentation.injection.module.RepositoryModule;
 import com.promise09th.mvvmproject.presentation.injection.module.RetrofitModule;
 import com.promise09th.mvvmproject.presentation.injection.module.ViewModelModule;
@@ -28,7 +27,6 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppModule.class,
         DataSourceModule.class,
         DbModule.class,
-        FragmentModule.class,
         RepositoryModule.class,
         RetrofitModule.class,
         ViewModelModule.class
@@ -44,6 +42,6 @@ public interface AppComponent extends AndroidInjector<MvvmApplication> {
 
     /*
      * This is our custom Application class
-     * */
+     */
     void inject(MvvmApplication mvvmApplication);
 }
