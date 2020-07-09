@@ -4,19 +4,20 @@
 
 MVVM + Clean Architecture
 
-- db : Use Room
-- remote : Retrofit
-- data : Repository / Data source
-- domain : Usecase
-- presentation : View / ViewModel
+- Db : Room
+- Remote : Retrofit
+- Data : Repository / Data source
+- Domain : Usecase
+- Presentation : View / ViewModel
 
 ## Language
+
 - Java
 
 ## Library
+
 - Android Jetpack
   * DataBinding
-  * LiveData
   * Room
   * ViewModel
 - Dagger2
