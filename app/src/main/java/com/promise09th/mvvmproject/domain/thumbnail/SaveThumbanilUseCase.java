@@ -7,6 +7,8 @@ import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class SaveThumbanilUseCase implements UseCase {
 
@@ -18,6 +20,8 @@ public class SaveThumbanilUseCase implements UseCase {
     }
 
     public Completable execute(Thumbnail savedThumbnail) {
-        return thumbnailRepository.saveThumbnail(savedThumbnail);
+        return thumbnailRepository.saveThumbnail(savedThumbnail)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

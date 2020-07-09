@@ -7,6 +7,8 @@ import com.promise09th.mvvmproject.presentation.model.Thumbnail;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class DeleteThumbnailUseCase implements UseCase {
 
@@ -18,6 +20,8 @@ public class DeleteThumbnailUseCase implements UseCase {
     }
 
     public Completable execute(Thumbnail savedThumbnail) {
-        return thumbnailRepository.deleteThumbnail(savedThumbnail);
+        return thumbnailRepository.deleteThumbnail(savedThumbnail)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

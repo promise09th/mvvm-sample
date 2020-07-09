@@ -1,12 +1,8 @@
 package com.promise09th.mvvmproject.data.source;
 
-import androidx.annotation.NonNull;
-
-import com.promise09th.mvvmproject.remote.mapper.DocumentMapper;
-import com.promise09th.mvvmproject.remote.kakao.KakaoRetrofitService;
-import com.promise09th.mvvmproject.remote.model.image.ImageResponse;
-import com.promise09th.mvvmproject.remote.model.video.VideoResponse;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
+import com.promise09th.mvvmproject.remote.kakao.KakaoRetrofitService;
+import com.promise09th.mvvmproject.remote.mapper.DocumentMapper;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -15,9 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 @Singleton
 public class ThumbnailRemoteDataSource {
@@ -33,59 +26,25 @@ public class ThumbnailRemoteDataSource {
         return Single.zip(
                 getVideoThumbnail(query),
                 getImageThumbnail(query),
-                (image, video) -> {
-                    image.addAll(video);
-                    return image;
+                (videos, images) -> {
+                    ArrayList<Thumbnail> thumbnails = new ArrayList<>();
+                    thumbnails.addAll(videos);
+                    thumbnails.addAll(images);
+                    return thumbnails;
                 });
     }
 
     private Single<ArrayList<Thumbnail>> getVideoThumbnail(String query) {
-        return Single.create(e -> {
-            Call<VideoResponse> imageThumbnailCall = kakaoService.requestVideoThumbnail(query);
-            imageThumbnailCall.enqueue(new Callback<VideoResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<VideoResponse> call, @NonNull Response<VideoResponse> response) {
-                    VideoResponse videoResponse = response.body();
-                    if (videoResponse != null) {
-                        e.onSuccess(videoResponse.getDocuments().stream()
-                                .map(DocumentMapper::mapToThumbanil)
-                                .collect(Collectors.toCollection(ArrayList::new)));
-                    } else {
-                        e.onError(new Throwable());
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<VideoResponse> call, @NonNull Throwable t) {
-                    call.cancel();
-                    e.onError(t);
-                }
-            });
-        });
+        return kakaoService.requestVideoThumbnail(query)
+                .map(videoResponse -> videoResponse.getDocuments().stream()
+                        .map(DocumentMapper::mapToThumbanil)
+                        .collect(Collectors.toCollection(ArrayList::new)));
     }
 
     private Single<ArrayList<Thumbnail>> getImageThumbnail(String query) {
-        return Single.create(e -> {
-            Call<ImageResponse> imageThumbnailCall = kakaoService.requestImageThumbnail(query);
-            imageThumbnailCall.enqueue(new Callback<ImageResponse>() {
-                @Override
-                public void onResponse(@NonNull Call<ImageResponse> call, @NonNull Response<ImageResponse> response) {
-                    ImageResponse imageResponse = response.body();
-                    if (imageResponse != null) {
-                        e.onSuccess(imageResponse.getDocuments().stream()
-                                .map(DocumentMapper::mapToThumbanil)
-                                .collect(Collectors.toCollection(ArrayList::new)));
-                    } else {
-                        e.onError(new Throwable());
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<ImageResponse> call, @NonNull Throwable t) {
-                    call.cancel();
-                    e.onError(t);
-                }
-            });
-        });
+        return kakaoService.requestImageThumbnail(query)
+                .map(imageResponse -> imageResponse.getDocuments().stream()
+                        .map(DocumentMapper::mapToThumbanil)
+                        .collect(Collectors.toCollection(ArrayList::new)));
     }
 }
