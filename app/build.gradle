@@ -9,7 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "KAKAO_REST_API_KEY", "\"171eadd27c9871b1b334b53ed0f6faea\"")
+        buildConfigField("String", "KAKAO_REST_API_KEY", kakao_rest_api_key)
     }
 
     buildTypes {
@@ -65,10 +65,10 @@ dependencies {
      * support for Activity and fragment injection so we need to include
      * the following dependencies
      */
-    implementation 'com.google.dagger:dagger-android:2.17'
-    implementation 'com.google.dagger:dagger-android-support:2.17'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+    implementation 'com.google.dagger:dagger-android:2.28'
+    implementation 'com.google.dagger:dagger-android-support:2.28'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.28'
 
     /* Dagger2 - default dependency */
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.28'
 }
