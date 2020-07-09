@@ -2,32 +2,37 @@ package com.promise09th.mvvmproject.presentation.main.recyclerview;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.AsyncDifferConfig;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 
-import com.promise09th.mvvmproject.R;
-import com.promise09th.mvvmproject.presentation.common.Constants;
-import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.databinding.ItemImageViewBinding;
+import com.promise09th.mvvmproject.presentation.common.ViewType;
 import com.promise09th.mvvmproject.presentation.main.viewmodel.ThumbnailViewModel;
 import com.promise09th.mvvmproject.presentation.model.Thumbnail;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
-
-    private List<Thumbnail> items = new ArrayList<>();
+public class ThumbnailAdapter extends ListAdapter<Thumbnail, ThumbnailHolder> {
 
     private ThumbnailViewModel thumbnailViewModel;
     private ViewType viewType;
 
     public ThumbnailAdapter(ThumbnailViewModel thumbnailViewModel, ViewType viewType) {
+        super(new AsyncDifferConfig.Builder<>(new DiffUtil.ItemCallback<Thumbnail>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull Thumbnail old,
+                                           @NonNull Thumbnail newItem) {
+                return old.equals(newItem);
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull Thumbnail old,
+                                              @NonNull Thumbnail newItem) {
+                return old.equals(newItem);
+            }
+        }).build());
+
         this.thumbnailViewModel = thumbnailViewModel;
         this.viewType = viewType;
     }
@@ -42,53 +47,6 @@ public class ThumbnailAdapter extends RecyclerView.Adapter<ThumbnailHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ThumbnailHolder holder, int position) {
-        holder.bind(items.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return items.get(position).hashCode();
-    }
-
-    public void setItem(List<Thumbnail> items) {
-        if (items != null) {
-            this.items.clear();
-            this.items.addAll(items);
-            notifyDataSetChanged();
-        }
-    }
-
-    @BindingAdapter("item")
-    public static void bindItems(RecyclerView recyclerView, ArrayList<Thumbnail> items) {
-        ThumbnailAdapter adapter = (ThumbnailAdapter)recyclerView.getAdapter();
-        if (adapter != null) {
-            adapter.setItem(items);
-        }
-    }
-
-    @BindingAdapter("thumbnailUrl")
-    public static void loadImage(ImageView imageView, String thumbnailUrl) {
-        Picasso.get().load(thumbnailUrl).into(imageView);
-    }
-
-    @BindingAdapter("bind_type")
-    public static void bindType(TextView textView, Thumbnail thumbnail) {
-        switch (thumbnail.getType()) {
-            case Constants.VIDEO_TYPE:
-                textView.setText(R.string.video);
-                textView.setTextColor(textView.getContext().getColor(R.color.color_39b4ee));
-                break;
-            case Constants.IMAGE_TYPE:
-                textView.setText(R.string.image);
-                textView.setTextColor(textView.getContext().getColor(R.color.color_f4754e));
-                break;
-            default:
-                break;
-        }
+        holder.bind(getItem(position));
     }
 }

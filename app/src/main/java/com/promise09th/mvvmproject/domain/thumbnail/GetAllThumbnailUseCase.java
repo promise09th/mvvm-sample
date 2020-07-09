@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class GetAllThumbnailUseCase implements UseCase {
 
@@ -20,6 +22,8 @@ public class GetAllThumbnailUseCase implements UseCase {
     }
 
     public Flowable<ArrayList<Thumbnail>> execute() {
-        return thumbnailRepository.getAllThumbnail();
+        return thumbnailRepository.getAllThumbnail()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

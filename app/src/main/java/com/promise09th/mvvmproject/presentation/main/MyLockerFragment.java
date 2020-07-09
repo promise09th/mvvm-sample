@@ -49,7 +49,6 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
         adapter = new ThumbnailAdapter(thumbnailViewModel, ViewType.LOCKER);
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_locker, container, false);
-        binding.setViewModel(thumbnailViewModel);
         binding.mylockerRecyclerview.setAdapter(adapter);
         binding.setLifecycleOwner(getActivity());
 
@@ -66,16 +65,22 @@ public class MyLockerFragment extends DaggerFragment implements PresetPosition {
             if (thumbnail == null) {
                 return;
             }
-
-            AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                    .setTitle(R.string.note)
-                    .setMessage(R.string.mylocker_thumbnail_delete)
-                    .setNegativeButton(R.string.btn_cancel, null)
-                    .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
-                            thumbnailViewModel.removeSavedThumbnail(thumbnail))
-                    .create();
-            dialog.show();
+            showDeleteItemDialog(thumbnail);
         });
+
+        thumbnailViewModel.getSavedThumbnail().observe(getViewLifecycleOwner(),
+                list -> adapter.submitList(list));
+    }
+
+    private void showDeleteItemDialog(Thumbnail thumbnail) {
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.note)
+                .setMessage(R.string.mylocker_thumbnail_delete)
+                .setNegativeButton(R.string.btn_cancel, null)
+                .setPositiveButton(R.string.btn_confirm, (dialogInterface, i) ->
+                        thumbnailViewModel.removeSavedThumbnail(thumbnail))
+                .create();
+        dialog.show();
     }
 
     @Override
