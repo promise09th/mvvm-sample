@@ -14,15 +14,16 @@ MVVM + Clean Architecture
 - Java
 
 ## Library
-- Data Binding
+- Android Jetpack
+  * DataBinding
+  * LiveData
+  * Room
+  * ViewModel
 - Dagger2
-- ViewModel (AAC)
-- ViewPager
-- RxJava2 (RxAndroid)
-- Retrofit2
 - Gson
 - Picasso
-- Room
+- RxJava2 (RxAndroid)
+- Retrofit2
 
 ## Operation
 
