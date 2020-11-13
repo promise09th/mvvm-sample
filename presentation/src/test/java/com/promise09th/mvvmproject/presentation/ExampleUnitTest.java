@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject;
+package com.promise09th.mvvmproject.presentation;
 
 import org.junit.Test;
 
