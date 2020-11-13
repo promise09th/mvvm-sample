@@ -1,4 +1,4 @@
-package com.promise09th.mvvmproject;
+package com.promise09th.mvvmproject.domain;
 
 import org.junit.Test;
 
