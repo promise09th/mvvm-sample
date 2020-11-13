@@ -1,1 +1,6 @@
-include ':app'
+include ':utils'
+include ':remote'
+include ':db'
+include ':data'
+include ':domain'
+include ':presentation'
