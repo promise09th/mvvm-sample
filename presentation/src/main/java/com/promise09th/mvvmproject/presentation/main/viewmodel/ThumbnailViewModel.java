@@ -35,9 +35,14 @@ public class ThumbnailViewModel extends ViewModel {
     private MutableLiveData<ArrayList<Thumbnail>> searchResultThumbnail = new MutableLiveData<>();
     private MutableLiveData<ArrayList<Thumbnail>> savedThumbnail = new MutableLiveData<>();
 
-    private MutableLiveData<Event<Thumbnail>> searchResultItemClicked = new MutableLiveData<>();
-    private MutableLiveData<Event<Thumbnail>> myLockerItemClicked = new MutableLiveData<>();
-    private MutableLiveData<Event<Boolean>> errorToastShown = new MutableLiveData<>();
+    private MutableLiveData<Event<Thumbnail>> _searchResultItemClicked = new MutableLiveData<>();
+    private LiveData<Event<Thumbnail>> searchResultItemClicked = _searchResultItemClicked;
+
+    private MutableLiveData<Event<Thumbnail>> _myLockerItemClicked = new MutableLiveData<>();
+    private LiveData<Event<Thumbnail>> myLockerItemClicked = _myLockerItemClicked;
+
+    private MutableLiveData<Event<Boolean>> _errorToastShown = new MutableLiveData<>();
+    private LiveData<Event<Boolean>> errorToastShown = _errorToastShown;
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -77,11 +82,11 @@ public class ThumbnailViewModel extends ViewModel {
         return savedThumbnail;
     }
 
-    public MutableLiveData<Event<Thumbnail>> getSearchResultItemClicked() {
+    public LiveData<Event<Thumbnail>> getSearchResultItemClicked() {
         return searchResultItemClicked;
     }
 
-    public MutableLiveData<Event<Thumbnail>> getMyLockerItemClicked() {
+    public LiveData<Event<Thumbnail>> getMyLockerItemClicked() {
         return myLockerItemClicked;
     }
 
@@ -90,11 +95,11 @@ public class ThumbnailViewModel extends ViewModel {
     }
 
     private void setSearchResultItemClicked(Thumbnail thumbnail) {
-        searchResultItemClicked.setValue(new Event<>(thumbnail));
+        _searchResultItemClicked.setValue(new Event<>(thumbnail));
     }
 
     private void setMyLockerItemClicked(Thumbnail thumbnail) {
-        myLockerItemClicked.setValue(new Event<>(thumbnail));
+        _myLockerItemClicked.setValue(new Event<>(thumbnail));
     }
 
     public void onClickItem(ViewType type, Thumbnail thumbnail) {
@@ -150,7 +155,7 @@ public class ThumbnailViewModel extends ViewModel {
                         .collect(Collectors.toCollection(ArrayList::new)))
                 .subscribe(
                         this::setSearchResultThumbnail,
-                        e -> errorToastShown.setValue(new Event<>(Boolean.TRUE))
+                        e -> _errorToastShown.setValue(new Event<>(Boolean.TRUE))
         ));
     }
 }
